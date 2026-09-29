@@ -135,7 +135,7 @@ html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 html.scrolling .sky canvas{animation-play-state:paused}
 html.lite .sky canvas{animation:none}
-html.lite .trail,html.lite .cl,html.lite .grain{display:none}
+html.lite .grain{display:none}
 html.lite nav.lg,html.lite .lang{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.9)}
 
 /* selector de idioma */
@@ -238,7 +238,7 @@ const root=document.documentElement;
 document.getElementById('tintR').addEventListener('input',e=>{root.style.setProperty('--tint',e.target.value)});
 
 /* luz del cursor: halo suave + estela de cometa muestreada a la tasa nativa del ratón */
-if(OK&&!LITE()&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
   const cl=document.querySelector('.cl'),cv=document.getElementById('trail');
   if(cl&&cv&&cv.getContext){
     const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2)*.5;
@@ -260,7 +260,7 @@ if(OK&&!LITE()&&matchMedia('(hover:hover) and (pointer:fine)').matches){
     document.addEventListener('mouseleave',()=>{seen=false;cl.style.opacity=0;pts.length=0;lastB=null;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,innerWidth,innerHeight)});
     let pt0=performance.now();
     gsap.ticker.add(()=>{
-      if(!seen||LITE())return;
+      if(!seen)return;
       const now=performance.now(),T=700,dt=Math.min((now-pt0)/1000,.05);pt0=now;
       const f=1-Math.exp(-dt*18);            /* el halo persigue con ~55 ms, independiente de fps */
       const ox=x,oy=y;
