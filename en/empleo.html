@@ -2,7 +2,11 @@
 <!-- ⚠ Sincronización: las cifras, la trayectoria y el contacto de esta web deben coincidir con el CV (PDF y Word) y con el perfil github.com/sandralobato. Si cambias uno, actualiza los otros. -->
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<script>/* modo ligero: en GPUs integradas (p. ej. Intel) se desactivan los efectos más caros. ?lite lo fuerza, ?full lo evita */
+(function(){try{var q=location.search,h=document.documentElement;if(/[?&]full\b/.test(q))return;var lite=/[?&]lite\b/.test(q);
+if(!lite){var g=document.createElement('canvas').getContext('webgl');var e=g&&g.getExtension('WEBGL_debug_renderer_info');var r=e?String(g.getParameter(e.UNMASKED_RENDERER_WEBGL)):'';if(/Intel|SwiftShader|llvmpipe|Mali|Adreno \(TM\) [1-5]/i.test(r))lite=true;var x=g&&g.getExtension('WEBGL_lose_context');if(x)x.loseContext()}
+if(lite)h.classList.add('lite')}catch(_){}})();</script><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Job search platform · case study · Sandra Lobato</title>
 <link rel="alternate" hreflang="es" href="https://sandralobato.com/empleo.html">
 <link rel="alternate" hreflang="en" href="https://sandralobato.com/en/empleo.html">
@@ -149,6 +153,14 @@ footer a:hover{color:var(--acc-text)}
 .quote blockquote{font-size:clamp(18px,1.6vw,21px);line-height:1.55;color:var(--ink);letter-spacing:-.005em}
 .quote figcaption{margin-top:18px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 
+/* rendimiento: scroll nativo; el cielo se pausa mientras haces scroll; modo ligero para GPUs modestas */
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html.scrolling .sky canvas{animation-play-state:paused}
+html.lite .sky canvas{animation:none}
+html.lite .trail,html.lite .cl,html.lite .grain{display:none}
+html.lite nav.lg,html.lite .lang{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.9)}
+
 /* selector de idioma */
 .lang{position:fixed;top:18px;right:20px;z-index:41;display:flex;gap:2px;padding:8px;border-radius:999px;backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
 .lang a{padding:10px 12px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.04em;line-height:17px;color:rgba(20,19,26,.55);transition:.25s}
@@ -279,13 +291,19 @@ footer a:hover{color:var(--acc-text)}
 <div class="lb" id="lb" aria-hidden="true"><img src="../img/en/e-07-mapa-del-sistema.webp" alt=""></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
-const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,OK=!!(window.gsap&&window.Lenis);let lenis=null;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,OK=!!window.gsap;let lenis=null;
 if(OK){gsap.registerPlugin(ScrollTrigger);
-if(!RM){lenis=new Lenis({lerp:.1});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);}}
+}
 const ANIM=OK&&!RM;
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t&&lenis){e.preventDefault();lenis.scrollTo(t,{offset:-80})}}));
+/* rendimiento: pausa el cielo durante el scroll y pasa a modo ligero si los primeros frames van lentos */
+const LITE=()=>document.documentElement.classList.contains('lite');
+(()=>{const h=document.documentElement;let st;addEventListener('scroll',()=>{h.classList.add('scrolling');clearTimeout(st);st=setTimeout(()=>h.classList.remove('scrolling'),160)},{passive:true});
+  if(LITE()||RM||/[?&]full\b/.test(location.search))return;
+  let last=performance.now(),n=0,slow=0;
+  const probe=t=>{const dt=t-last;last=t;if(++n>10&&dt>24)slow++;if(n<130)requestAnimationFrame(probe);else if(slow>30)h.classList.add('lite')};
+  requestAnimationFrame(probe)})();
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});history.replaceState(null,'',a.getAttribute('href'))}}));
 
 /* cielo: textura cónica pre-renderizada una vez (nítida a 256px, escalada = difuminada); rota por compositor */
 (()=>{const sky=document.querySelector('.sky');if(!sky)return;
@@ -306,7 +324,7 @@ const root=document.documentElement,tintR=document.getElementById('tintR');
 tintR.addEventListener('input',e=>{root.style.setProperty('--tint',e.target.value)});
 
 /* luz del cursor: halo suave + estela de cometa muestreada a la tasa nativa del ratón */
-if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+if(OK&&!LITE()&&matchMedia('(hover:hover) and (pointer:fine)').matches){
   const cl=document.querySelector('.cl'),cv=document.getElementById('trail');
   if(cl&&cv&&cv.getContext){
     const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2)*.5;
@@ -326,7 +344,7 @@ if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
     document.addEventListener('mouseleave',()=>{seen=false;cl.style.opacity=0;pts.length=0;lastB=null;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,innerWidth,innerHeight)});
     let pt0=performance.now();
     gsap.ticker.add(()=>{
-      if(!seen)return;
+      if(!seen||LITE())return;
       const now=performance.now(),T=700,dt=Math.min((now-pt0)/1000,.05);pt0=now;
       const f=1-Math.exp(-dt*18);
       const ox=x,oy=y;
@@ -377,8 +395,8 @@ if(ANIM)document.querySelectorAll('[data-n]').forEach(b=>{const n=+b.dataset.n,p
 /* lightbox */
 const lb=document.getElementById('lb');
 let lbFocus=null;
-const lbOpen=im=>{lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.classList.add('on');lb.setAttribute('aria-hidden','false');if(lenis)lenis.stop();lbFocus=document.activeElement;lb.focus()};
-const lbClose=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true');if(lenis)lenis.start();if(lbFocus&&lbFocus.focus)lbFocus.focus()};
+const lbOpen=im=>{lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.classList.add('on');lb.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';lbFocus=document.activeElement;lb.focus()};
+const lbClose=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';if(lbFocus&&lbFocus.focus)lbFocus.focus()};
 document.querySelectorAll('.fig img').forEach(im=>{im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label','Enlarge: '+(im.alt||'image'));im.addEventListener('click',()=>lbOpen(im));im.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lbOpen(im)}})});
 lb.tabIndex=-1;
 lb.addEventListener('click',()=>lbClose());
