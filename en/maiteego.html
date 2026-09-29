@@ -1,0 +1,468 @@
+<!doctype html>
+<!-- ⚠ Sincronización: las cifras, la trayectoria y el contacto de esta web deben coincidir con el CV (PDF y Word) y con el perfil github.com/sandralobato. Si cambias uno, actualiza los otros. -->
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maiteego AI · case study · Sandra Lobato</title>
+<link rel="alternate" hreflang="es" href="https://sandralobato.com/maiteego.html">
+<link rel="alternate" hreflang="en" href="https://sandralobato.com/en/maiteego.html">
+<meta name="description" content="An AI travel app in public beta: from trip planner to travel companion. Research, architecture, design system and iteration with real users, with a before and after of every key screen.">
+<meta property="og:title" content="Maiteego AI · case study · Sandra Lobato">
+<meta property="og:description" content="An AI travel app in public beta: from trip planner to travel companion. Research, architecture, design system and iteration with real users.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sandralobato.com/en/maiteego.html">
+<meta property="og:image" content="https://sandralobato.com/img/og-en-maiteego.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236D5BFF'/%3E%3Ccircle cx='44' cy='20' r='22' fill='%23ffffff' opacity='.22'/%3E%3Ccircle cx='44' cy='20' r='10' fill='%23ffffff' opacity='.92'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#E9E6FF">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--tint:.55;--blur:18px;--ink:#14131A;--dim:#4B4A57;--ink2:#3E3D49;--glass:rgba(255,255,255,calc(.62*var(--tint) + .08));--acc:#6D5BFF;--acc-text:#5B44E8;--acc2:#D6409B;--acc3:#0B7E8C;--r:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Geist,Inter,system-ui,sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;background:#EEEDF7;min-height:100vh}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+[id]{scroll-margin-top:110px}
+.wrap{width:min(1040px,calc(100% - 48px));margin:0 auto}
+@media(max-width:700px){.wrap{width:calc(100% - 24px)}}
+
+/* fondo + luz (mismo sistema que la home): cónico pre-renderizado, rota por compositor */
+.sky{position:fixed;inset:-20%;z-index:-2;overflow:hidden}
+.sky canvas{position:absolute;left:50%;top:50%;width:135vmax;height:135vmax;transform:translate(-50%,-50%);animation:rot 24s linear infinite;will-change:transform}
+.sky::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 40%,rgba(255,255,255,.55),transparent)}
+@keyframes rot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}
+@media(prefers-reduced-motion:reduce){.sky canvas{animation:none}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.cl{position:fixed;left:0;top:0;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(255,255,255,.8) 0%,rgba(255,255,255,.28) 42%,transparent 70%);opacity:0;transition:opacity .6s;will-change:transform}
+.trail{position:fixed;inset:0;z-index:-1;pointer-events:none}
+@media(hover:none){.cl,.trail{display:none}}
+@media(prefers-reduced-motion:reduce){.cl,.trail{display:none}}
+
+/* material: el grueso del contenido no lleva blur real (el fondo ya es difuso); solo la nav lo conserva */
+.lg{position:relative;background:var(--glass);border-radius:var(--r);box-shadow:0 24px 60px -28px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(20,19,26,.05)}
+nav.lg{backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.05) 35%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.03) 70%,rgba(255,255,255,.5));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:4px;padding:8px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
+nav a{padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;transition:.25s;white-space:nowrap}
+nav a:hover{background:rgba(255,255,255,.5)}
+nav a.logo{font-weight:700}
+nav a.cta{background:#14131A;color:#fff;margin-left:16px}
+@media(max-width:700px){nav a{padding:8px 12px;font-size:13px}nav a.h{display:none}nav a.cta{margin-left:12px}}
+
+.tint{position:fixed;right:18px;bottom:18px;z-index:40;padding:12px 16px;border-radius:999px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--dim);background:rgba(255,255,255,.62)}
+.tint input{width:110px;accent-color:#14131A}
+@media(max-width:700px){.tint{display:none}}
+
+/* hero del caso */
+.ch{padding:150px 0 70px;display:grid;grid-template-columns:1.05fr .75fr;gap:48px;align-items:center}
+.eb{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.ch h1{font-weight:700;font-size:clamp(31px,4.2vw,56px);line-height:1.03;letter-spacing:-.04em;margin-top:16px}
+.ch .lead{font-size:clamp(16px,1.4vw,18.5px);color:var(--dim);margin-top:18px;max-width:560px}
+.ficha{margin-top:26px;padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px 26px}
+.ficha b{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.ficha span{font-size:14px;font-weight:500}
+.ficha a{color:var(--acc-text);font-weight:600}
+.fbrand img{height:64px;width:auto;margin-top:4px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chips a{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500;background:rgba(255,255,255,.6);border:1px solid rgba(20,19,26,.12);box-shadow:0 6px 16px -8px rgba(20,19,26,.25),inset 0 1px 0 rgba(255,255,255,.8);transition:.25s}
+.chips a:hover{transform:translateY(-1px);background:rgba(255,255,255,.78);box-shadow:0 10px 22px -10px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.9)}
+.devwrap{width:min(300px,80%);margin:0 auto}
+.dev{position:relative;width:100%;margin:0 auto;border-radius:48px;padding:10px;background:#0E0E12;box-shadow:0 30px 60px -25px rgba(20,19,26,.55),inset 0 0 0 1px rgba(255,255,255,.08)}
+.dev::before,.dev::after{content:none}
+.dev img{width:100%;border-radius:38px}
+@media(max-width:940px){.ch{grid-template-columns:1fr;padding-top:120px}.devwrap{order:-1}}
+
+/* secciones */
+.sec{padding:84px 0 0}
+.sec h2{font-weight:800;font-size:clamp(27px,3.4vw,44px);letter-spacing:-.04em;line-height:1.05}
+.sec>p{font-size:18px;color:var(--ink2);margin-top:18px}
+.sec h3{font-weight:700;font-size:clamp(19px,2vw,23px);letter-spacing:-.02em;margin-top:36px}
+.callout{margin-top:26px;padding:22px 26px;border-left:4px solid var(--acc);font-size:15.5px;color:var(--ink2)}
+.callout b{color:var(--acc-text)}
+.fig{margin-top:26px;padding:14px}
+.fig img{width:100%;border-radius:14px;cursor:zoom-in}
+.fig figcaption{font-size:12.5px;color:var(--dim);padding:12px 6px 2px;line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.stat{padding:22px}
+.stat b{display:block;font-size:clamp(32px,3.8vw,50px);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13px;color:var(--dim)}
+.phones4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.ph{padding:8px;border-radius:28px}
+.ph img{width:100%;border-radius:21px}
+.ph figcaption{font-size:12px;color:var(--dim);padding:10px 4px 2px;line-height:1.45}
+.swatches{display:flex;gap:14px;margin:30px 0 26px;flex-wrap:wrap;padding-left:4px}
+.sw{width:36px;height:36px;border-radius:50%;position:relative;transition:transform .25s;box-shadow:inset 0 0 0 1px rgba(20,19,26,.12)}
+.sw:hover{transform:scale(1.2)}
+.sw span{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--dim);opacity:0;transition:.2s;white-space:nowrap}
+.sw:hover span{opacity:1}
+.flujo{display:flex;align-items:center;gap:28px;margin:40px 0 10px;justify-content:center}
+.flujo b{font-size:clamp(76px,11vw,150px);font-weight:800;line-height:1;letter-spacing:-.05em;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.flujo i{font-style:normal;font-size:36px;color:var(--dim)}
+.flujo-cap{text-align:center;font-size:13px;color:var(--dim);margin-top:14px}
+
+/* evolución en beta */
+.evo{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start;padding:64px 0 0}
+.evo .txt{position:sticky;top:104px}
+.evo .txt h3{margin-top:0;font-size:clamp(20px,2.2vw,26px);letter-spacing:-.025em;line-height:1.12}
+.evo .txt>p{font-size:15px;color:var(--dim);margin-top:12px}
+.evo.rev .txt{order:2}
+.evo .vis{display:grid;gap:18px;justify-items:center}
+@media(max-width:940px){.evo{grid-template-columns:1fr;gap:26px}.evo .txt{position:static}.evo.rev .txt{order:0}}
+.ba{position:relative;width:100%;max-width:330px;aspect-ratio:780/1689;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.7);box-shadow:0 24px 50px -20px rgba(20,19,26,.35);cursor:ew-resize;touch-action:none;user-select:none}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba .b{clip-path:inset(0 50% 0 0)}
+.ba .h{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.ba .h i{position:absolute;top:50%;left:50%;width:40px;height:40px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25);display:grid;place-items:center;font-size:14px;font-style:normal;color:#14131A}
+.ba .lb{position:absolute;top:12px;padding:5px 9px;border-radius:999px;background:rgba(16,16,18,.75);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.1em}
+.ba .lb.l{left:12px}.ba .lb.r{right:12px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:420px}
+.duo figure{margin:0}
+.duo figcaption{font-size:12px;color:var(--dim);padding:10px 4px 0;line-height:1.45}
+.duo img{width:100%;border-radius:26px;border:1px solid rgba(255,255,255,.7);box-shadow:0 24px 50px -20px rgba(20,19,26,.3)}
+
+.btns{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:14.5px;transition:.3s cubic-bezier(.2,.8,.2,1)}
+.btn:hover{transform:translateY(-2px)}
+.btn.p{background:#14131A;color:#fff}
+.btn.o{background:rgba(255,255,255,.6);border:1px solid rgba(20,19,26,.12);box-shadow:0 8px 20px -10px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.8)}
+.casecta{display:block;margin:74px 0 -40px;text-align:center;font-weight:600;font-size:15px;color:var(--acc-text)}
+.next{margin:96px 0 30px;padding:32px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.next h3{font-size:clamp(19px,2.4vw,26px);margin-top:6px;letter-spacing:-.02em}
+.next .go{font-weight:600;color:var(--acc-text);white-space:nowrap}
+footer{padding:26px 0 56px;font-size:13px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a:hover{color:var(--acc-text)}
+.lb{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(20,19,26,.62);backdrop-filter:blur(8px);cursor:zoom-out;padding:24px}
+.lb.on{display:grid}
+.lb img{max-width:94vw;max-height:92vh;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}.phones4{grid-template-columns:1fr 1fr}.ficha{grid-template-columns:1fr}}
+
+/* resumen de resultados del caso */
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-20px;margin-bottom:10px}
+.res .rc{padding:22px 24px}
+.res .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.res p{font-size:15px;line-height:1.5;color:var(--ink2);margin-top:8px}
+.res .n{display:block;font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:4px;background:linear-gradient(100deg,#6D5BFF,#D6409B 52%,#0B7E8C);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){.res{grid-template-columns:1fr;margin-top:0}}
+
+/* observación en beta: hallazgo → decisión */
+.obs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.obs .o{padding:20px 22px}
+.obs .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.obs .k.d{color:var(--acc-text);margin-top:14px}
+.obs .o p{font-size:14.5px;line-height:1.5;margin-top:6px;color:var(--ink2)}
+@media(max-width:860px){.obs{grid-template-columns:1fr}}
+
+/* autocrítica: qué haría distinto */
+.aut{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.aut.one{grid-template-columns:1fr}
+.aut .a{padding:20px 22px}
+.aut .a b{display:block;font-size:15.5px;font-weight:600;color:var(--ink)}
+.aut .a p{font-size:14.5px;line-height:1.55;margin-top:6px;color:var(--ink2)}
+@media(max-width:860px){.aut{grid-template-columns:1fr}}
+
+/* testimonio */
+.quote{margin-top:64px;padding:34px 38px 30px;position:relative}
+.quote blockquote{font-size:clamp(18px,1.6vw,21px);line-height:1.55;color:var(--ink);letter-spacing:-.005em}
+.quote figcaption{margin-top:18px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+
+/* selector de idioma */
+.lang{position:fixed;top:18px;right:20px;z-index:41;display:flex;gap:2px;padding:8px;border-radius:999px;backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lang a{padding:10px 12px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.04em;line-height:17px;color:rgba(20,19,26,.55);transition:.25s}
+.lang a:hover{color:#14131A;background:rgba(255,255,255,.5)}
+.lang a[aria-current]{background:#14131A;color:#fff}
+@media(max-width:900px){nav{left:12px;transform:none}.lang{right:12px}}
+@media(max-width:700px){.lang a{padding:8px 10px}}
+@media(max-width:520px){nav a[href="#proyectos"]{display:none}}
+</style>
+</head>
+<body>
+<div class="sky"></div><div class="grain"></div><canvas id="trail" class="trail" aria-hidden="true"></canvas><div class="cl" aria-hidden="true"></div>
+<nav class="lg"><a class="logo" href="index.html">Sandra Lobato</a><a class="h" href="index.html#proyectos">All work</a><a class="h" href="filosofia.html">Philosophy</a><a class="h" href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a><a class="cta" href="mailto:info@sandralobato.com">Contact</a></nav>
+<div class="lang lg" role="navigation" aria-label="Language"><a href="../maiteego.html" hreflang="es" lang="es" aria-label="Español">ES</a><a href="maiteego.html" hreflang="en" lang="en" aria-current="page" aria-label="English">EN</a></div>
+<div class="tint"><span>Clear</span><input type="range" min="0" max="1" step="0.01" value="0.55" id="tintR" aria-label="Adjust glass tint"><span>Tinted</span></div>
+
+<header class="ch wrap">
+  <div>
+    <div class="eb">Case study · B2C · Mobile-first · Public beta</div>
+    <h1>Maiteego AI: from trip planner to travel companion</h1>
+    <p class="lead">An AI travel app that builds personalised itineraries and supports travellers before and during the trip. End-to-end design and product evolution in a public beta with real users.</p>
+    <div class="ficha lg">
+      <div><b>Role</b><span>Co-founder · sole UX/UI designer</span></div>
+      <div><b>Timeline</b><span>2024 – present · public beta since 2025</span></div>
+      <div><b>Team</b><span>CTO and co-founder (development)</span></div>
+      <div><b>Tools</b><span>Miro, Figma, Penpot, Notion, Cursor, v0</span></div>
+      <div><b>Scale</b><span>18 months in beta · iOS, Android and web · ~300 registered users</span></div>
+      <div><b>Brand</b><span class="fbrand"><img src="../img/maiteego-rebrand.webp" alt="Maiteego logo"></span></div>
+      <div><b>Links</b><span><a href="https://maiteego.ai" target="_blank" rel="noopener">maiteego.ai</a> · <a href="https://design.penpot.app/#/view?file-id=d8ac01df-6646-81d2-8008-a9d78c134001&page-id=d8ac01df-6646-81d2-8008-a9d78c134002&section=interactions&index=0&share-id=ad2df6e2-e228-4533-9906-39130e7fe0b5" target="_blank" rel="noopener">Prototype ↗</a> · <a href="https://www.figma.com/design/PEDNYvSeMEMRduPFb3UjVn/Maiteego?node-id=0-1&t=8V3MgSgtkgCllJrl-1" target="_blank" rel="noopener">Process in Figma ↗</a> · <a href="https://www.instagram.com/maiteego.ai" target="_blank" rel="noopener">Instagram ↗</a> · <a href="https://www.tiktok.com/@maiteego.ai" target="_blank" rel="noopener">TikTok ↗</a></span></div>
+    </div>
+    <div class="chips"><a href="#problema">Problem</a><a href="#research">Research</a><a href="#arquitectura">Architecture</a><a href="#sistema">Design system</a><a href="#iteracion">Iteration</a><a href="#evolucion">Evolution</a><a href="#resultados">Results</a></div>
+  </div>
+  <div class="devwrap"><div class="dev"><img src="../img/phone-home.webp" alt="Maiteego home screen"></div></div>
+</header>
+<section class="res wrap" aria-label="Case summary"><div class="rc lg"><span class="k">The problem</span><p>Planning a trip means jumping between notes, maps, screenshots and apps, and travel apps stop at inspiration or at planning with rigid structures.</p></div><div class="rc lg"><span class="k">What I did</span><p>As the sole designer, I designed end to end an AI app where every place the chat mentions is added to the plan in one tap, with a 15-component design system.</p></div><div class="rc lg"><span class="k">Impact</span><p><b class="n">4 → 2</b>screens in the create-itinerary flow, with no personalisation data lost. 18 months in public beta on iOS, Android and web.</p></div></section>
+
+<main class="wrap">
+<section class="sec" id="problema">
+  <h2>The problem</h2>
+  <p>Planning a trip usually means juggling several tools at once: notes, maps, screenshots, booking emails and recommendation apps. That fragmentation raises cognitive load and makes it hard to get a clear picture of the trip.</p>
+  <p>Many existing apps focus either on inspiration or on rigid planning, forcing people into predefined structures that reflect neither their preferences nor how plans change over time.</p>
+  <p>The challenge: a solution for building personalised itineraries, with all the relevant information at hand, flexible and easy to update, both before and during the trip.</p>
+  <h3>My role and the constraints</h3>
+  <p>I worked as co-founder and sole UX/UI designer, owning the whole process: product definition, flows, information architecture, visual system and prototypes. I collaborated with the CTO and co-founder, which meant frequent iterations and decisions balancing user needs, business goals and technical feasibility, with limited time and a constantly shifting roadmap.</p>
+  <div class="callout lg">This case has two parts: <b>how I designed the first version</b> (research, architecture, visual system and iteration) and <b>how the product evolved in public beta</b> into the current version, with a before and after of every key screen.</div>
+</section>
+
+<section class="sec" id="research">
+  <h2>Research: competitors and beta users</h2>
+  <h3>Direct competitor benchmark</h3>
+  <p>I analysed four direct competitors (Mindtrip, Layla, Wonderplan and Wanderlog). The market is made of specialised solutions: each one solves one phase of the trip, but none covers in-trip support with AI at its core. That gap is what defines Maiteego.</p>
+  <figure class="fig lg"><img src="../img/en/m-benchmark.webp" alt="Benchmark comparison matrix" loading="lazy" decoding="async"><figcaption>Comparison matrix: focus, AI, personalisation, in-trip support, collaboration, bookings and price. Source: own analysis, Sept. 2026.</figcaption></figure>
+  <p>That led to the product principles: prioritise clarity over the core function, allow flexibility when building itineraries, and support the traveller before and during the trip.</p>
+  <h3>Observation in the beta (April 2026): why new users weren't creating their first trip</h3>
+  <p>With the app in beta, I observed new users on the first step of creating a trip, where you add stops, stays and transport. There was no quantitative data for that flow, so the research was qualitative, and what I saw was clear: people didn't know where to start.</p>
+  <div class="obs"><div class="o lg"><span class="k">I observed</span><p>They couldn't find how to add the first destination: the only entry point was a «+» with four collapsed options on an empty screen.</p><span class="k d">I decided</span><p>An empty state with a single action that says what it does: «Add your first destination».</p></div><div class="o lg"><span class="k">I observed</span><p>They didn't understand how a trip is organised: stops that contain their stays and transport.</p><span class="k d">I decided</span><p>Keep that hierarchy, but make it visible: each stop shows its stays and transport inside it, with its own add button.</p></div><div class="o lg"><span class="k">I observed</span><p>They struggled to edit and delete, because it depended on a barely visible edit mode.</p><span class="k d">I decided</span><p>Remove the mode: edit and delete always visible on each card, and each stop's days adjustable inline.</p></div></div>
+  <p>I turned those observations into five questions and checked them against six references (Wanderlog, TripIt, Roadtrippers, TripAdvisor, Sygic Travel and Google My Maps). The conclusion: apps that work either remove the blank screen or make the first action so obvious it needs no instructions. From there I explored three directions (a step-by-step wizard, a single screen with inline actions and a hybrid) and recommended the hybrid: a guided question, «Where do you want to go?», that places the first stop and then gives users freedom to continue. It's the biggest change for new users with the smallest change to the flow's structure.</p>
+  <div class="callout lg"><b>What's missing:</b> this research was qualitative because there were no metrics for the flow. The next step is to measure it: what percentage of new users create their first trip before and after the redesign.</div>
+</section>
+
+<section class="sec" id="arquitectura">
+  <h2>Information architecture and first version</h2>
+  <p>Before drawing any screens I defined the main sections in Miro (itinerary creation, destination information, explore) and simple, flexible flows for creating, editing and adapting itineraries without rigid structures.</p>
+  <h3>Key screens of the first version (2025)</h3>
+  <div class="phones4">
+    <figure class="ph lg"><img src="../img/phone25-home.webp" alt="Home 2025" loading="lazy" decoding="async"><figcaption>Home · greeting and stats</figcaption></figure>
+    <figure class="ph lg"><img src="../img/phone25-explore.webp" alt="Explore 2025" loading="lazy" decoding="async"><figcaption>Explore · city collections</figcaption></figure>
+    <figure class="ph lg"><img src="../img/phone25-itinerary.webp" alt="Itinerary 2025" loading="lazy" decoding="async"><figcaption>Itinerary · today's destination and activities</figcaption></figure>
+    <figure class="ph lg"><img src="../img/phone25-destination.webp" alt="Destination 2025" loading="lazy" decoding="async"><figcaption>Destination · card with photo and key facts</figcaption></figure>
+  </div>
+  <p>Designed to balance information density and visual clarity in a mobile context: hierarchy, legibility, spacing and clear CTAs to reduce cognitive load while planning and while travelling.</p>
+</section>
+
+<section class="sec" id="sistema">
+  <h2>The design system today</h2>
+  <p>With the app in production, the system settled like this: neutrals on the Zinc scale, a single brand blue, three semantic colours (warning, avoid, success), eight text styles in Geist, a 4 pt grid, and hierarchy through borders and surfaces instead of shadows. Fifteen components cover 90% of the screens.</p>
+  <figure class="fig lg"><img src="../img/en/m-ds-tokens.webp" alt="Design system tokens" loading="lazy" decoding="async"><figcaption>Tokens: colour, typography, radii, spacing and iconography, measured on the production screens.</figcaption></figure>
+  <figure class="fig lg"><img src="../img/en/m-ds-componentes.webp" alt="Component inventory" loading="lazy" decoding="async"><figcaption>Component and variant inventory, drawn with the design system tokens.</figcaption></figure>
+  <div class="callout lg"><b>Decision:</b> a single brand colour. In a travel app the photos already bring the colour; the interface stays neutral so that blue always means the same thing: «this is where you act» (button, active chip, link, toggle). Semantic colours are reserved for the callouts in the guides, where colour does carry information.</div>
+  <div class="swatches" aria-label="System palette">
+    <div class="sw" style="background:#09090B"><span>#09090B</span></div>
+    <div class="sw" style="background:#71717A"><span>#71717A</span></div>
+    <div class="sw" style="background:#E4E4E7"><span>#E4E4E7</span></div>
+    <div class="sw" style="background:#3A8BCD"><span>#3A8BCD</span></div>
+    <div class="sw" style="background:#F5A623"><span>#F5A623</span></div>
+    <div class="sw" style="background:#16A34A"><span>#16A34A</span></div>
+  </div>
+</section>
+
+<section class="sec" id="iteracion">
+  <h2>Iteration: creating an itinerary, from 4 screens to 2</h2>
+  <p>Iteration was constant: several solutions were redesigned as goals evolved and feedback revealed gaps between the initial ideas and real needs. Working so closely with my co-founder pushed me to take feedback, step back from my first decisions and iterate towards clearer solutions.</p>
+  <p>The clearest example: the «create itinerary» flow went from four screens to two. I reduced the number of screens and the elements on each one so users wouldn't feel overwhelmed, without dropping any preference or data needed to personalise the trip.</p>
+  <div class="flujo"><b data-n="4">4</b><i>→</i><b data-n="2">2</b></div>
+  <div class="flujo-cap">screens in the «create itinerary» flow</div>
+</section>
+
+<section class="sec" id="evolucion">
+  <h2>Product evolution in beta (2025 → 2026): from planner to travel companion</h2>
+  <p>With real users, the design evolved in three directions: putting AI at the centre of the interaction (a chat where everything mentioned is actionable), turning the destination into a guide that answers questions instead of a static card, and bringing live information (local time, weather, alerts) into the explore screens. The screens are real production captures.</p>
+
+  <div class="evo">
+    <div class="txt"><h3>1 · Home: from a stats dashboard to a question</h3>
+      <p>Before: greeting, stats and «continue planning». After: the question to the AI is the hero.</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> the first home summarised the user's activity but didn't show what makes the app different. Now the first action is to ask: the field fills the hero, a rotating example shows what you can ask for without a tutorial, and planning and exploring become secondary actions.</div></div>
+    <div class="vis"><div class="ba"><img src="../img/phone-home.webp" alt="Home 2026" loading="lazy"><img class="b" src="../img/phone25-home.webp" alt="Home 2025" loading="lazy"><div class="h"><i>‹ ›</i></div><span class="lb l">2025</span><span class="lb r">2026</span></div></div>
+  </div>
+
+  <div class="evo rev">
+    <div class="txt"><h3>2 · Chat: every place the AI mentions is a card you can add to the plan</h3>
+      <p>Inline chips inside the answer and, at the end, the «Mentioned in this answer» cards with a «+» to add them to the itinerary.</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> the problem with travel chats is that the answer is plain text, so users have to copy, search and come back. Here every place is recognised inside the text as a verified chip linked to the map, and at the end they're grouped as cards with a «+». One tap and it's in the plan: the answer stops being something to read and becomes something to work with.</div></div>
+    <div class="vis"><div class="duo"><figure><img src="../img/phone-chat-respuesta.webp" alt="Chat with the AI's answer" loading="lazy" decoding="async"><figcaption>The answer arrives with verified inline chips.</figcaption></figure><figure><img src="../img/phone-chat-tarjetas.webp" alt="Chat with actionable cards" loading="lazy" decoding="async"><figcaption>The «Mentioned in this answer» cards, with a «+» to add them to the plan.</figcaption></figure></div></div>
+  </div>
+
+  <div class="evo">
+    <div class="txt"><h3>3 · Explore: from a city gallery to a live map</h3>
+      <p>Before: photo collections of cities. After: a map with places by type and a bottom sheet with local time, weather and lists.</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> the gallery looked nice but was static and useless during the trip. The new Explore is a map with a draggable sheet: local time and weather, a practical tip and lists by category. Users choose where to look; the app tells them what's there right now.</div></div>
+    <div class="vis"><div class="ba"><img src="../img/phone-explorar-mapa.webp" alt="Explore 2026, live map" loading="lazy"><img class="b" src="../img/phone25-explore.webp" alt="Explore 2025, gallery" loading="lazy"><div class="h"><i>‹ ›</i></div><span class="lb l">2025</span><span class="lb r">2026</span></div></div>
+  </div>
+
+  <div class="evo rev">
+    <div class="txt"><h3>4 · Destination guide: from a fact sheet to an editorial guide</h3>
+      <p>Before: photo, a generic paragraph and six facts. After: a hero with character tags, tabs by intent and «Why Kyoto».</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> the guide is organised around the questions travellers ask, each with its own visual pattern: is it for me? (scores by profile), when should I go? (traffic-light calendar), what should I know? (alerts in warning colour) and what do I need? (fact sheet). Progressive disclosure, plus a field to ask the AI about that destination.</div></div>
+    <div class="vis"><div class="ba"><img src="../img/phone-guia-hero.webp" alt="Destination guide 2026" loading="lazy"><img class="b" src="../img/phone25-destination.webp" alt="Destination card 2025" loading="lazy"><div class="h"><i>‹ ›</i></div><span class="lb l">2025</span><span class="lb r">2026</span></div>
+      <figure class="fig lg" style="margin-top:0"><img src="../img/en/m-04-guia-destino-modulos.webp" alt="Destination guide modules" loading="lazy" decoding="async"><figcaption>The guide's modules: who it's for, when to go, stay safe and fact sheet.</figcaption></figure></div>
+  </div>
+
+  <div class="evo">
+    <div class="txt"><h3>5 · Itinerary: from a list of activities to a plan that reacts</h3>
+      <p>Before: today's destination and featured activities. After: flexible dates, the day's weather, accommodation, a numbered route and travel times between stops.</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> the itinerary is used phone in hand, so everything added answers a question of that moment: what's the weather like? how long will it take? where am I sleeping? On the place card, when opening hours are missing there's a shortcut: «Ask if it's open». When the trip ends, the app turns it into a memory («Time since your adventure»).</div></div>
+    <div class="vis"><div class="ba"><img src="../img/phone-itinerario-dia.webp" alt="Itinerary 2026" loading="lazy"><img class="b" src="../img/phone25-itinerary.webp" alt="Itinerary 2025" loading="lazy"><div class="h"><i>‹ ›</i></div><span class="lb l">2025</span><span class="lb r">2026</span></div>
+      <figure class="fig lg" style="margin-top:0"><img src="../img/en/m-08-lugar-clima-recuerdo.webp" alt="Place card, weather and post-trip summary" loading="lazy" decoding="async"><figcaption>Around the itinerary: the place card, the weather sheet and the summary of a finished trip.</figcaption></figure></div>
+  </div>
+
+  <div class="evo rev">
+    <div class="txt"><h3>6 · My trips and profile: the traveller's memory and transparency about AI</h3>
+      <p>Trip history, saved itineraries with a day bar per destination, and AI usage visible in the profile.</p>
+      <div class="callout lg" style="margin-top:18px"><b>Decision:</b> in saved itineraries, a proportional bar with one colour per city lets you read the structure of the trip without opening it. In the profile, AI usage is shown as two windows with their percentage and reset date: the limit is communicated in advance, not as an error once it runs out.</div></div>
+    <div class="vis"><figure class="fig lg" style="margin-top:0"><img src="../img/en/m-06-viajes-perfil.webp" alt="My trips and profile" loading="lazy" decoding="async"><figcaption>History, saved itineraries and AI usage in the profile.</figcaption></figure></div>
+  </div>
+</section>
+
+<figure class="quote lg"><blockquote>«Sandra is a designer who works well, gets involved in projects and doesn't reduce her work to just making screens and that's it. She takes the trouble to understand the problem, think about the user with empathy and find solutions by iterating on the product. Her curiosity about AI has led her to use it to find ways to help her in her work: exploring new ideas, different approaches, speeding up tasks… But always putting her judgement as a designer first. She's a profile that keeps evolving over time and is always looking for how to do things a little better.»</blockquote><figcaption>CTO and co-founder of Maiteego</figcaption></figure>
+
+<section class="sec" id="resultados">
+  <h2>Results and learnings</h2>
+  <div class="stats">
+    <div class="stat lg"><b data-n="18">18</b><span>months in public beta</span></div>
+    <div class="stat lg"><b data-n="3">3</b><span>platforms: iOS, Android and web</span></div>
+    <div class="stat lg"><b data-n="300" data-p="~">~300</b><span>registered users</span></div>
+    <div class="stat lg"><b>€0</b><span>external funding</span></div>
+  </div>
+  <p>Maiteego resulted in a solid design foundation: a clear structure, a consistent visual system and a user-centred approach aligned with the travel companion concept. The evolution in beta (chat, guides, live map) proved that foundation could scale: the system and architecture of the first version supported far more complex features without redoing the navigation.</p>
+  <p>Beyond the screens, this project consolidated my understanding of the full UX/Product flow, from discovery to iteration, and my ability to design with intent, justify decisions and work within real constraints. I keep iterating based on real usage.</p>
+  <h3>What I'd do differently</h3>
+  <div class="aut"><div class="a lg"><b>Validate before building</b><p>The first step of creating a trip reached the beta with a «+» that new users couldn't find. A five-person test on the prototype would have caught it earlier and at a lower cost.</p></div><div class="a lg"><b>Measure from day one</b><p>We didn't instrument the key flows, so the beta research could only be qualitative. Today I'd define two or three metrics before launch, such as the percentage of new users who create their first trip.</p></div></div>
+  <div class="btns"><a class="btn p" href="https://design.penpot.app/#/view?file-id=d8ac01df-6646-81d2-8008-a9d78c134001&page-id=d8ac01df-6646-81d2-8008-a9d78c134002&section=interactions&index=0&share-id=ad2df6e2-e228-4533-9906-39130e7fe0b5" target="_blank" rel="noopener">Walk through the prototype ↗</a><a class="btn o" href="https://www.figma.com/design/PEDNYvSeMEMRduPFb3UjVn/Maiteego?node-id=0-1&t=8V3MgSgtkgCllJrl-1" target="_blank" rel="noopener">Process in Figma ↗</a><a class="btn o" href="https://maiteego.ai" target="_blank" rel="noopener">Try the app</a></div>
+</section>
+
+<a class="casecta" href="mailto:info@sandralobato.com?subject=Maiteego%20case">Want to talk about this case? Email me ↗</a>
+
+<a class="next lg" href="empleo.html"><div><div class="eb">Next case</div><h3>Job search platform · B2B SaaS</h3></div><span class="go">Read the case →</span></a>
+</main>
+<footer class="wrap"><span>Sandra Lobato Pardavila · A Coruña, Spain · Available · Remote · <a href="mailto:info@sandralobato.com">info@sandralobato.com</a></span><span><a href="index.html">Home</a> · <a href="https://www.linkedin.com/in/sandra-lobato/" target="_blank" rel="noopener">LinkedIn</a> · <a href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a> · <a href="https://maiteego.ai" target="_blank" rel="noopener">maiteego.ai</a></span></footer>
+
+<div class="lb" id="lb" aria-hidden="true"><img src="../img/en/m-benchmark.webp" alt=""></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,OK=!!(window.gsap&&window.Lenis);let lenis=null;
+if(OK){gsap.registerPlugin(ScrollTrigger);
+if(!RM){lenis=new Lenis({lerp:.1});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);}}
+const ANIM=OK&&!RM;
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t&&lenis){e.preventDefault();lenis.scrollTo(t,{offset:-80})}}));
+
+/* cielo: textura cónica pre-renderizada una vez (nítida a 256px, escalada = difuminada); rota por compositor */
+(()=>{const sky=document.querySelector('.sky');if(!sky)return;
+  const small=document.createElement('canvas');small.width=small.height=256;
+  const sc=small.getContext('2d');
+  if(sc.createConicGradient){const g=sc.createConicGradient(0,128,128);
+    ['#E9E6FF','#FFE1EF','#E0FBF5','#FFF2D9','#E9E6FF'].forEach((c,i)=>g.addColorStop(i/4,c));
+    sc.fillStyle=g;sc.fillRect(0,0,256,256)}
+  else{sc.fillStyle='#E9E6FF';sc.fillRect(0,0,256,256)}
+  const tex=document.createElement('canvas');tex.width=tex.height=1024;
+  const tc=tex.getContext('2d');tc.imageSmoothingEnabled=true;tc.imageSmoothingQuality='high';
+  tc.drawImage(small,0,0,1024,1024);
+  sky.appendChild(tex);tex.setAttribute('aria-hidden','true');
+})();
+
+/* tinte del cristal */
+const root=document.documentElement,tintR=document.getElementById('tintR');
+tintR.addEventListener('input',e=>{root.style.setProperty('--tint',e.target.value)});
+
+/* luz del cursor: halo suave + estela de cometa muestreada a la tasa nativa del ratón */
+if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const cl=document.querySelector('.cl'),cv=document.getElementById('trail');
+  if(cl&&cv&&cv.getContext){
+    const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2)*.5;
+    let pts=[],mx=innerWidth*.5,my=innerHeight*.35,x=mx,y=my,clean=false,lastB=null,seen=false;
+    const sp=document.createElement('canvas');sp.width=sp.height=128;
+    {const sc=sp.getContext('2d'),g=sc.createRadialGradient(64,64,0,64,64,64);
+     g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.5)');g.addColorStop(1,'rgba(255,255,255,0)');
+     sc.fillStyle=g;sc.fillRect(0,0,128,128)}
+    let cle=false;
+    const size=()=>{cv.width=Math.ceil(innerWidth*dpr);cv.height=Math.ceil(innerHeight*dpr);cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';cle=false;lastB=null};
+    size();addEventListener('resize',size);
+    addEventListener('pointermove',e=>{
+      const evs=e.getCoalescedEvents?e.getCoalescedEvents():null,list=evs&&evs.length?evs:[e];
+      for(const ev of list){const ex=ev.clientX,ey=ev.clientY,l=pts[pts.length-1];
+        if(!l||l.x!==ex||l.y!==ey)pts.push({x:ex,y:ey,t:ev.timeStamp||performance.now()})}
+      mx=e.clientX;my=e.clientY;if(!seen){seen=true;x=mx;y=my;cl.style.opacity=1}cle=false;
+    },{passive:true});
+    document.addEventListener('mouseleave',()=>{seen=false;cl.style.opacity=0;pts.length=0;lastB=null;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,innerWidth,innerHeight)});
+    let pt0=performance.now();
+    gsap.ticker.add(()=>{
+      if(!seen)return;
+      const now=performance.now(),T=700,dt=Math.min((now-pt0)/1000,.05);pt0=now;
+      const f=1-Math.exp(-dt*18);
+      const ox=x,oy=y;
+      x+=(mx-x)*f;y+=(my-y)*f;
+      cl.style.transform=`translate(${x}px,${y}px)`;
+      if(pts.length>500)pts.splice(0,pts.length-500);
+      while(pts.length&&now-pts[0].t>T)pts.shift();
+      if(cle&&pts.length===0&&x===ox&&y===oy)return;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      /* limpiar solo la caja del rastro (margen para sellos y cabeza), unida a la del frame anterior */
+      let bx=x-60,by=y-60,bx2=x+60,by2=y+60;
+      for(const p of pts){if(p.x<bx)bx=p.x;if(p.y<by)by=p.y;if(p.x>bx2)bx2=p.x;if(p.y>by2)by2=p.y}
+      if(lastB){bx=Math.min(bx,lastB.x);by=Math.min(by,lastB.y);bx2=Math.max(bx2,lastB.x+lastB.w);by2=Math.max(by2,lastB.y+lastB.h)}
+      ctx.clearRect(bx,by,bx2-bx,by2-by);
+      lastB={x:bx,y:by,w:bx2-bx,h:by2-by};
+      ctx.globalCompositeOperation='lighter';
+      const n=pts.length,hx=n?pts[n-1].x:x,hy=n?pts[n-1].y:y;
+      const rg=ctx.createRadialGradient(hx,hy,0,hx,hy,28);
+      rg.addColorStop(0,'rgba(255,255,255,.65)');rg.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(hx,hy,28,0,7);ctx.fill();
+      if(n>=3&&Math.hypot(pts[n-1].x-pts[0].x,pts[n-1].y-pts[0].y)>4){
+        const d=[{x:pts[0].x,y:pts[0].y,k:Math.max(0,Math.min(1,(pts[0].t-now+T)/T))}];
+        let lx=pts[0].x,ly=pts[0].y;
+        for(let i=1;i<n;i++){const a=pts[i-1],b=pts[i],st=Math.max(1,Math.round(Math.hypot(b.x-lx,b.y-ly)/10));
+          for(let s=1;s<=st;s++){const t=s/st,tt=a.t+(b.t-a.t)*t,nx2=a.x+(b.x-a.x)*t,ny2=a.y+(b.y-a.y)*t;
+            d.push({x:nx2,y:ny2,k:Math.max(0,Math.min(1,(tt-now+T)/T))});lx=nx2;ly=ny2}}
+        const stamp=(r0,r1,a0)=>{for(const p of d){const r=r1+(r0-r1)*p.k;ctx.globalAlpha=a0*p.k;ctx.drawImage(sp,p.x-r,p.y-r,r*2,r*2)}};
+        stamp(46,10,.16);stamp(18,4,.35);
+        ctx.globalAlpha=1;
+      }
+      ctx.globalCompositeOperation='source-over';
+      cle=pts.length===0&&x===ox&&y===oy;
+    });
+  }
+}
+
+/* hero */
+if(ANIM)gsap.from('.ch .eb,.ch h1,.ch .lead,.ch .ficha,.ch .chips',{opacity:0,y:26,duration:1,stagger:.09,ease:'power3'});
+if(ANIM)gsap.from('.ch .devwrap',{opacity:0,y:60,scale:.95,duration:1.4,delay:.25,ease:'expo.out'});
+if(ANIM){
+  gsap.to('.ch .devwrap',{y:-16,duration:4,yoyo:true,repeat:-1,ease:'sine.inOut',delay:1.7});
+}
+if(ANIM)gsap.to('.ch .dev',{y:-80,ease:'none',scrollTrigger:{trigger:'.ch',start:'top top',end:'bottom top',scrub:true}});
+
+/* revelado */
+if(ANIM)gsap.utils.toArray('.fig,.callout,.ph,.stat,.ficha,.next,.swatches,.duo').forEach(el=>gsap.from(el,{opacity:0,y:34,duration:.9,ease:'power3',clearProps:'transform,opacity',scrollTrigger:{trigger:el,start:'top 90%'}}));
+if(ANIM)gsap.utils.toArray('.evo').forEach(el=>gsap.from(el,{opacity:0,y:44,duration:1,ease:'power3',clearProps:'transform,opacity',scrollTrigger:{trigger:el,start:'top 86%'}}));
+
+/* comparadores 2025/2026 */
+document.querySelectorAll('.ba').forEach(ba=>{
+  const bimg=ba.querySelector('.b'),hd=ba.querySelector('.h');let drag=false;
+  const setP=p=>{p=Math.max(0,Math.min(100,p));bimg.style.clipPath=`inset(0 ${100-p}% 0 0)`;hd.style.left=p+'%';ba.setAttribute('aria-valuenow',Math.round(p))};
+  const set=x=>{const r=ba.getBoundingClientRect();setP((x-r.left)/r.width*100)};
+  ba.tabIndex=0;ba.setAttribute('role','slider');ba.setAttribute('aria-valuemin','0');ba.setAttribute('aria-valuemax','100');ba.setAttribute('aria-valuenow','50');ba.setAttribute('aria-label','Before and after comparison: use the arrow keys to move');
+  ba.addEventListener('pointerdown',e=>{e.preventDefault();drag=true;ba.setPointerCapture(e.pointerId);set(e.clientX)});
+  ba.addEventListener('pointermove',e=>drag&&set(e.clientX));ba.addEventListener('pointerup',()=>drag=false);
+  ba.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setP(+ba.getAttribute('aria-valuenow')+(e.key==='ArrowRight'?5:-5))}});
+  if(ANIM)gsap.to({p:50},{p:30,duration:1.4,yoyo:true,repeat:1,ease:'sine.inOut',scrollTrigger:{trigger:ba,start:'top 85%',once:true},onUpdate:function(){const p=this.targets()[0].p;bimg.style.clipPath=`inset(0 ${100-p}% 0 0)`;hd.style.left=p+'%'}});
+});
+
+/* contadores */
+if(ANIM)document.querySelectorAll('[data-n]').forEach(b=>{const n=+b.dataset.n,p=b.dataset.p||'',c={v:0};ScrollTrigger.create({trigger:b,start:'top 90%',once:true,onEnter:()=>gsap.to(c,{v:n,duration:1.5,ease:'expo.out',onUpdate:()=>b.textContent=(p==='+'?'':p)+Math.round(c.v).toLocaleString('en-US')+(p==='+'?'+':'')})})});
+
+/* lightbox */
+const lb=document.getElementById('lb');
+let lbFocus=null;
+const lbOpen=im=>{lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.classList.add('on');lb.setAttribute('aria-hidden','false');if(lenis)lenis.stop();lbFocus=document.activeElement;lb.focus()};
+const lbClose=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true');if(lenis)lenis.start();if(lbFocus&&lbFocus.focus)lbFocus.focus()};
+document.querySelectorAll('.fig img').forEach(im=>{im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label','Enlarge: '+(im.alt||'image'));im.addEventListener('click',()=>lbOpen(im));im.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lbOpen(im)}})});
+lb.tabIndex=-1;
+lb.addEventListener('click',()=>lbClose());
+addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))lbClose()});
+
+</script>
+</body>
+</html>

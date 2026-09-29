@@ -1,0 +1,301 @@
+<!doctype html>
+<!-- ⚠ Sincronización: las cifras, la trayectoria y el contacto de esta web deben coincidir con el CV (PDF y Word) y con el perfil github.com/sandralobato. Si cambias uno, actualiza los otros. -->
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selected projects · Sandra Lobato</title>
+<link rel="alternate" hreflang="es" href="https://sandralobato.com/proyectos.html">
+<link rel="alternate" hreflang="en" href="https://sandralobato.com/en/proyectos.html">
+<meta name="description" content="Two internal tools with complex permissions: a recruitment system for eight departments and a hackathon platform with QR check-in and jury voting.">
+<meta property="og:title" content="Selected projects · Sandra Lobato">
+<meta property="og:description" content="Two internal tools with complex permissions: recruitment for eight departments and a hackathon with QR check-in.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sandralobato.com/en/proyectos.html">
+<meta property="og:image" content="https://sandralobato.com/img/og-en-proyectos.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236D5BFF'/%3E%3Ccircle cx='44' cy='20' r='22' fill='%23ffffff' opacity='.22'/%3E%3Ccircle cx='44' cy='20' r='10' fill='%23ffffff' opacity='.92'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#E9E6FF">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--tint:.55;--blur:18px;--ink:#14131A;--dim:#4B4A57;--ink2:#3E3D49;--glass:rgba(255,255,255,calc(.62*var(--tint) + .08));--acc:#6D5BFF;--acc-text:#5B44E8;--acc2:#D6409B;--acc3:#0B7E8C;--r:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Geist,Inter,system-ui,sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;background:#EEEDF7;min-height:100vh}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+[id]{scroll-margin-top:110px}
+.wrap{width:min(1040px,calc(100% - 48px));margin:0 auto}
+@media(max-width:700px){.wrap{width:calc(100% - 24px)}}
+
+/* fondo + luz (mismo sistema que la home): cónico pre-renderizado, rota por compositor */
+.sky{position:fixed;inset:-20%;z-index:-2;overflow:hidden}
+.sky canvas{position:absolute;left:50%;top:50%;width:135vmax;height:135vmax;transform:translate(-50%,-50%);animation:rot 24s linear infinite;will-change:transform}
+.sky::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 40%,rgba(255,255,255,.55),transparent)}
+@keyframes rot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}
+@media(prefers-reduced-motion:reduce){.sky canvas{animation:none}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.cl{position:fixed;left:0;top:0;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(255,255,255,.8) 0%,rgba(255,255,255,.28) 42%,transparent 70%);opacity:0;transition:opacity .6s;will-change:transform}
+.trail{position:fixed;inset:0;z-index:-1;pointer-events:none}
+@media(hover:none){.cl,.trail{display:none}}
+@media(prefers-reduced-motion:reduce){.cl,.trail{display:none}}
+
+/* material: el grueso del contenido no lleva blur real (el fondo ya es difuso); solo la nav lo conserva */
+.lg{position:relative;background:var(--glass);border-radius:var(--r);box-shadow:0 24px 60px -28px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(20,19,26,.05)}
+nav.lg{backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.05) 35%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.03) 70%,rgba(255,255,255,.5));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:4px;padding:8px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
+nav a{padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;transition:.25s;white-space:nowrap}
+nav a:hover{background:rgba(255,255,255,.5)}
+nav a.logo{font-weight:700}
+nav a.cta{background:#14131A;color:#fff;margin-left:16px}
+@media(max-width:700px){nav a{padding:8px 12px;font-size:13px}nav a.h{display:none}nav a.cta{margin-left:12px}}
+
+.tint{position:fixed;right:18px;bottom:18px;z-index:40;padding:12px 16px;border-radius:999px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--dim);background:rgba(255,255,255,.62)}
+.tint input{width:110px;accent-color:#14131A}
+@media(max-width:700px){.tint{display:none}}
+
+/* hero */
+.ch{padding:160px 0 60px}
+.ch>*{max-width:780px}
+.eb{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.ch h1{font-weight:700;font-size:clamp(32px,4.6vw,60px);line-height:1.02;letter-spacing:-.04em;margin-top:16px}
+.ch .lead{font-size:clamp(16px,1.5vw,19px);color:var(--dim);margin-top:20px}
+
+/* secciones */
+.sec{padding:84px 0 0}
+.sec .meta{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc-text)}
+.sec h2{font-weight:800;font-size:clamp(27px,3.4vw,44px);letter-spacing:-.04em;line-height:1.05;margin-top:12px}
+.sec>p{font-size:18px;color:var(--ink2);margin-top:18px}
+.fig{margin-top:26px;padding:14px}
+.fig img{width:100%;border-radius:14px;cursor:zoom-in}
+.fig figcaption{font-size:12.5px;color:var(--dim);padding:12px 6px 2px;line-height:1.55}
+.cards{display:grid;gap:14px;margin-top:26px}
+.card{padding:24px}
+.card h3{font-size:17px;letter-spacing:-.01em;margin-top:0}
+.card p{font-size:15px;color:var(--ink2);margin-top:10px}
+.c3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.c3{grid-template-columns:1fr}}
+.nota{margin-top:26px;padding:16px 20px;font-size:13.5px;color:var(--dim);line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.stat{padding:22px}
+.stat b{display:block;font-size:clamp(30px,3.6vw,46px);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13px;color:var(--dim)}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+ul.lista{margin-top:14px;list-style:none;display:grid;gap:8px}
+ul.lista li{padding:14px 18px;font-size:15px;color:var(--ink2)}
+.casecta{display:block;margin:74px 0 -40px;text-align:center;font-weight:600;font-size:15px;color:var(--acc-text)}
+.next{margin:96px 0 30px;padding:32px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.next h3{font-size:clamp(19px,2.4vw,26px);margin-top:6px;letter-spacing:-.02em}
+.next .go{font-weight:600;color:var(--acc-text);white-space:nowrap}
+footer{padding:26px 0 96px;font-size:13px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a:hover{color:var(--acc-text)}
+.lb{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(20,19,26,.62);backdrop-filter:blur(8px);cursor:zoom-out;padding:24px}
+.lb.on{display:grid}
+.lb img{max-width:94vw;max-height:92vh;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+
+/* resumen de resultados del caso */
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-20px;margin-bottom:10px}
+.res .rc{padding:22px 24px}
+.res .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.res p{font-size:15px;line-height:1.5;color:var(--ink2);margin-top:8px}
+.res .n{display:block;font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:4px;background:linear-gradient(100deg,#6D5BFF,#D6409B 52%,#0B7E8C);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){.res{grid-template-columns:1fr;margin-top:0}}
+
+/* autocrítica: qué haría distinto */
+.aut{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.aut.one{grid-template-columns:1fr}
+.aut .a{padding:20px 22px}
+.aut .a b{display:block;font-size:15.5px;font-weight:600;color:var(--ink)}
+.aut .a p{font-size:14.5px;line-height:1.55;margin-top:6px;color:var(--ink2)}
+@media(max-width:860px){.aut{grid-template-columns:1fr}}
+
+/* selector de idioma */
+.lang{position:fixed;top:18px;right:20px;z-index:41;display:flex;gap:2px;padding:8px;border-radius:999px;backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lang a{padding:10px 12px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.04em;line-height:17px;color:rgba(20,19,26,.55);transition:.25s}
+.lang a:hover{color:#14131A;background:rgba(255,255,255,.5)}
+.lang a[aria-current]{background:#14131A;color:#fff}
+@media(max-width:900px){nav{left:12px;transform:none}.lang{right:12px}}
+@media(max-width:700px){.lang a{padding:8px 10px}}
+@media(max-width:520px){nav a[href="#proyectos"]{display:none}}
+</style>
+</head>
+<body>
+<div class="sky"></div><div class="grain"></div><canvas id="trail" class="trail" aria-hidden="true"></canvas><div class="cl" aria-hidden="true"></div>
+<nav class="lg"><a class="logo" href="index.html">Sandra Lobato</a><a class="h" href="index.html#proyectos">All work</a><a class="h" href="filosofia.html">Philosophy</a><a class="h" href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a><a class="cta" href="mailto:info@sandralobato.com">Contact</a></nav>
+<div class="lang lg" role="navigation" aria-label="Language"><a href="../proyectos.html" hreflang="es" lang="es" aria-label="Español">ES</a><a href="proyectos.html" hreflang="en" lang="en" aria-current="page" aria-label="English">EN</a></div>
+<div class="tint"><span>Clear</span><input type="range" min="0" max="1" step="0.01" value="0.55" id="tintR" aria-label="Adjust glass tint"><span>Tinted</span></div>
+
+<header class="ch wrap">
+  <div class="eb">Selected projects · Internal tools · Low-code</div>
+  <h1>Two internal tools with complex permissions</h1>
+  <p class="lead">Beyond the two case studies, I have designed and built other internal tools and B2B SaaS products focused on complex workflows, role-based access and operational efficiency. For confidentiality I don't show screenshots: the diagrams are reconstructions with generic names, generated with Claude from the original design.</p>
+</header>
+<section class="res wrap" aria-label="Projects summary"><div class="rc lg"><span class="k">The problem</span><p>Two needs with complex permissions and little margin: eight departments that couldn't see each other's candidates, and a 110-person event with check-in and a jury.</p></div><div class="rc lg"><span class="k">What I did</span><p>I designed and built both tools in low-code, with isolation defined through pages and permissions, and a QR code that works with any phone camera, no app needed.</p></div><div class="rc lg"><span class="k">Impact</span><p><b class="n">82 / 110</b>check-ins recorded by QR on the day of the event, and around 2,000 candidates managed by 8 departments in a single system.</p></div></section>
+
+<main class="wrap">
+<section class="sec" id="reclutamiento">
+  <div class="meta">2023 · B2B · Airtable + Softr + Make</div>
+  <h2>Internal recruitment platform for a multinational</h2>
+  <p>An industrial multinational needed eight departments to run their own hiring processes in a single system, without any of them seeing the others' candidates, while HR kept the global view. Around 2,000 candidates, an average of 5 openings per department per month and about 20 people using it every day.</p>
+  <figure class="fig lg"><img src="../img/en/s-reclutamiento.webp" alt="Recruitment system diagram" loading="lazy" decoding="async"><figcaption>Global views for HR, eight pairs of pages (openings + candidates) isolated by department, and a single data model underneath. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <div class="cards c3">
+    <div class="card lg"><h3>Isolation through pages, not filters</h3><p>Each department has its own openings and candidates pages, with permissions at page, block and field level. Nobody can «remove a filter» and see another team. The admin sees everything.</p></div>
+    <div class="card lg"><h3>Recoverable applications</h3><p>A rejected candidate doesn't disappear: they move to a recoverable pool for other openings, with views by profile (Product Owner, Quality). The hiring effort gets reused.</p></div>
+    <div class="card lg"><h3>Job description separate from the opening</h3><p>Descriptions live in a library and are written once; each new opening references them from a creation form. No copy and paste.</p></div>
+  </div>
+  <div class="nota lg">Data model, frontend and automations are mine. All the permission logic (profiles, pages, blocks and fields) is defined in the model, not on each screen. Project delivered and closed in 2023.</div>
+  <div class="stats">
+    <div class="stat lg"><b data-n="2000">2,000</b><span>candidates</span></div>
+    <div class="stat lg"><b data-n="8">8</b><span>departments</span></div>
+    <div class="stat lg"><b data-n="20">20</b><span>daily users</span></div>
+  </div>
+</section>
+
+<section class="sec" id="hackathon">
+  <div class="meta">2025–2026 · In-person event · Airtable + Softr + Make</div>
+  <h2>A 110-person hackathon: QR check-in and jury voting</h2>
+  <p>A large company was running a hackathon with 110 guests, 10 teams and 7 judges, and needed to control attendance at the door and collect votes in a comparable way, on a tight deadline. Three roles: organisers, jury and participants.</p>
+  <figure class="fig lg"><img src="../img/en/s-hackathon.webp" alt="Hackathon diagram: QR, voting and roles" loading="lazy" decoding="async"><figcaption>QR check-in flow, the jury's voting card and the three role-based views. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <div class="cards c3">
+    <div class="card lg"><h3>A QR code that is a link, not a code to scan</h3><p>Each guest gets a QR code encoding a unique URL with their ID. Any phone camera opens it; a webhook marks attendance and the organisers' dashboard updates instantly. No app, no scanner, no code. On the day: 82 of 110 checked in.</p></div>
+    <div class="card lg"><h3>Five fixed criteria for comparable votes</h3><p>Impact, functional development, originality, responsibility and ethics, and presentation; a 1–5 scale and a comment per criterion. Weighting is calculated automatically. The verdict is explained with data.</p></div>
+    <div class="card lg"><h3>Judges kept apart</h3><p>A judge never sees another judge's votes and «You've already voted» prevents duplicates; the organisers see the full team × judge grid in real time.</p></div>
+  </div>
+  <div class="nota lg">It's the project that best sums up how I work: a specific need, a short deadline and a solution that doesn't require anyone to install anything.</div>
+  <div class="stats">
+    <div class="stat lg"><b data-n="110">110</b><span>guests</span></div>
+    <div class="stat lg"><b data-n="10">10</b><span>teams</span></div>
+    <div class="stat lg"><b data-n="7">7</b><span>judges</span></div>
+    <div class="stat lg"><b data-n="82">82</b><span>check-ins confirmed by QR</span></div>
+  </div>
+</section>
+
+<section class="sec" id="otras">
+  <h2>Other internal tools and systems</h2>
+  <ul class="lista">
+    <li class="lg">LMS platforms for student and training management.</li>
+    <li class="lg">Survey and feedback systems (NPS, 360° reviews).</li>
+    <li class="lg">Applicant tracking system (ATS) with AI CV parsing: the team went on to process three times as many applications per day.</li>
+    <li class="lg">Data dashboards and reporting interfaces for management.</li>
+  </ul>
+  <h3>What I'd do differently</h3>
+  <div class="aut one"><div class="a lg"><b>Measure impact, not just volume</b><p>For the recruitment platform I know how many candidates, departments and people used it, but not how much time-to-hire dropped or how many recoverable applications ended up in another opening. Today I'd define that before delivery.</p></div></div>
+  <a class="casecta" href="mailto:info@sandralobato.com?subject=Selected%20projects">Want to talk about this case? Email me ↗</a>
+
+<a class="next lg" href="index.html#proyectos"><div><div class="eb">Back</div><h3>All work</h3></div><span class="go">Go to home →</span></a>
+</section>
+</main>
+<footer class="wrap"><span>Sandra Lobato Pardavila · A Coruña, Spain · Available · Remote · <a href="mailto:info@sandralobato.com">info@sandralobato.com</a></span><span><a href="index.html">Home</a> · <a href="https://www.linkedin.com/in/sandra-lobato/" target="_blank" rel="noopener">LinkedIn</a> · <a href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a></span></footer>
+
+<div class="lb" id="lb" aria-hidden="true"><img src="../img/en/s-reclutamiento.webp" alt=""></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,OK=!!(window.gsap&&window.Lenis);let lenis=null;
+if(OK){gsap.registerPlugin(ScrollTrigger);
+if(!RM){lenis=new Lenis({lerp:.1});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);}}
+const ANIM=OK&&!RM;
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t&&lenis){e.preventDefault();lenis.scrollTo(t,{offset:-80})}}));
+
+/* cielo: textura cónica pre-renderizada una vez (nítida a 256px, escalada = difuminada); rota por compositor */
+(()=>{const sky=document.querySelector('.sky');if(!sky)return;
+  const small=document.createElement('canvas');small.width=small.height=256;
+  const sc=small.getContext('2d');
+  if(sc.createConicGradient){const g=sc.createConicGradient(0,128,128);
+    ['#E9E6FF','#FFE1EF','#E0FBF5','#FFF2D9','#E9E6FF'].forEach((c,i)=>g.addColorStop(i/4,c));
+    sc.fillStyle=g;sc.fillRect(0,0,256,256)}
+  else{sc.fillStyle='#E9E6FF';sc.fillRect(0,0,256,256)}
+  const tex=document.createElement('canvas');tex.width=tex.height=1024;
+  const tc=tex.getContext('2d');tc.imageSmoothingEnabled=true;tc.imageSmoothingQuality='high';
+  tc.drawImage(small,0,0,1024,1024);
+  sky.appendChild(tex);tex.setAttribute('aria-hidden','true');
+})();
+
+/* tinte del cristal */
+const root=document.documentElement,tintR=document.getElementById('tintR');
+tintR.addEventListener('input',e=>{root.style.setProperty('--tint',e.target.value)});
+
+/* luz del cursor: halo suave + estela de cometa muestreada a la tasa nativa del ratón */
+if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const cl=document.querySelector('.cl'),cv=document.getElementById('trail');
+  if(cl&&cv&&cv.getContext){
+    const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2)*.5;
+    let pts=[],mx=innerWidth*.5,my=innerHeight*.35,x=mx,y=my,clean=false,lastB=null,seen=false;
+    const sp=document.createElement('canvas');sp.width=sp.height=128;
+    {const sc=sp.getContext('2d'),g=sc.createRadialGradient(64,64,0,64,64,64);
+     g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.5)');g.addColorStop(1,'rgba(255,255,255,0)');
+     sc.fillStyle=g;sc.fillRect(0,0,128,128)}
+    const size=()=>{cv.width=Math.ceil(innerWidth*dpr);cv.height=Math.ceil(innerHeight*dpr);cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';clean=false;lastB=null};
+    size();addEventListener('resize',size);
+    addEventListener('pointermove',e=>{
+      const evs=e.getCoalescedEvents?e.getCoalescedEvents():null,list=evs&&evs.length?evs:[e];
+      for(const ev of list){const ex=ev.clientX,ey=ev.clientY,l=pts[pts.length-1];
+        if(!l||l.x!==ex||l.y!==ey)pts.push({x:ex,y:ey,t:ev.timeStamp||performance.now()})}
+      mx=e.clientX;my=e.clientY;if(!seen){seen=true;x=mx;y=my;cl.style.opacity=1}clean=false;
+    },{passive:true});
+    document.addEventListener('mouseleave',()=>{seen=false;cl.style.opacity=0;pts.length=0;lastB=null;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,innerWidth,innerHeight)});
+    let pt0=performance.now();
+    gsap.ticker.add(()=>{
+      if(!seen)return;
+      const now=performance.now(),T=700,dt=Math.min((now-pt0)/1000,.05);pt0=now;
+      const f=1-Math.exp(-dt*18);
+      const ox=x,oy=y;
+      x+=(mx-x)*f;y+=(my-y)*f;
+      cl.style.transform=`translate(${x}px,${y}px)`;
+      if(pts.length>500)pts.splice(0,pts.length-500);
+      while(pts.length&&now-pts[0].t>T)pts.shift();
+      if(clean&&pts.length===0&&x===ox&&y===oy)return;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      /* limpiar solo la caja del rastro (margen para sellos y cabeza), unida a la del frame anterior */
+      let bx=x-60,by=y-60,bx2=x+60,by2=y+60;
+      for(const p of pts){if(p.x<bx)bx=p.x;if(p.y<by)by=p.y;if(p.x>bx2)bx2=p.x;if(p.y>by2)by2=p.y}
+      if(lastB){bx=Math.min(bx,lastB.x);by=Math.min(by,lastB.y);bx2=Math.max(bx2,lastB.x+lastB.w);by2=Math.max(by2,lastB.y+lastB.h)}
+      ctx.clearRect(bx,by,bx2-bx,by2-by);
+      lastB={x:bx,y:by,w:bx2-bx,h:by2-by};
+      ctx.globalCompositeOperation='lighter';
+      const n=pts.length,hx=n?pts[n-1].x:x,hy=n?pts[n-1].y:y;
+      const rg=ctx.createRadialGradient(hx,hy,0,hx,hy,28);
+      rg.addColorStop(0,'rgba(255,255,255,.65)');rg.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(hx,hy,28,0,7);ctx.fill();
+      if(n>=3&&Math.hypot(pts[n-1].x-pts[0].x,pts[n-1].y-pts[0].y)>4){
+        const d=[{x:pts[0].x,y:pts[0].y,k:Math.max(0,Math.min(1,(pts[0].t-now+T)/T))}];
+        let lx=pts[0].x,ly=pts[0].y;
+        for(let i=1;i<n;i++){const a=pts[i-1],b=pts[i],st=Math.max(1,Math.round(Math.hypot(b.x-lx,b.y-ly)/10));
+          for(let s=1;s<=st;s++){const t=s/st,tt=a.t+(b.t-a.t)*t,nx2=a.x+(b.x-a.x)*t,ny2=a.y+(b.y-a.y)*t;
+            d.push({x:nx2,y:ny2,k:Math.max(0,Math.min(1,(tt-now+T)/T))});lx=nx2;ly=ny2}}
+        const stamp=(r0,r1,a0)=>{for(const p of d){const r=r1+(r0-r1)*p.k;ctx.globalAlpha=a0*p.k;ctx.drawImage(sp,p.x-r,p.y-r,r*2,r*2)}};
+        stamp(46,10,.16);stamp(18,4,.35);
+        ctx.globalAlpha=1;
+      }
+      ctx.globalCompositeOperation='source-over';
+      clean=pts.length===0&&x===ox&&y===oy;
+    });
+  }
+}
+
+/* hero */
+if(ANIM)gsap.from('.ch .eb,.ch h1,.ch .lead',{opacity:0,y:26,duration:1,stagger:.09,ease:'power3'});
+
+/* revelado */
+if(ANIM)gsap.utils.toArray('.fig,.card,.stat,.nota,.next,ul.lista li').forEach(el=>gsap.from(el,{opacity:0,y:34,duration:.9,ease:'power3',clearProps:'transform,opacity',scrollTrigger:{trigger:el,start:'top 90%'}}));
+
+/* contadores */
+if(ANIM)document.querySelectorAll('[data-n]').forEach(b=>{const n=+b.dataset.n,p=b.dataset.p||'',c={v:0};ScrollTrigger.create({trigger:b,start:'top 90%',once:true,onEnter:()=>gsap.to(c,{v:n,duration:1.6,ease:'expo.out',onUpdate:()=>b.textContent=(p==='+'?'':p)+Math.round(c.v).toLocaleString('en-US')+(p==='+'?'+':'')})})});
+
+/* lightbox */
+const lb=document.getElementById('lb');
+let lbFocus=null;
+const lbOpen=im=>{lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.classList.add('on');lb.setAttribute('aria-hidden','false');if(lenis)lenis.stop();lbFocus=document.activeElement;lb.focus()};
+const lbClose=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true');if(lenis)lenis.start();if(lbFocus&&lbFocus.focus)lbFocus.focus()};
+document.querySelectorAll('.fig img').forEach(im=>{im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label','Enlarge: '+(im.alt||'image'));im.addEventListener('click',()=>lbOpen(im));im.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lbOpen(im)}})});
+lb.tabIndex=-1;
+lb.addEventListener('click',()=>lbClose());
+addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))lbClose()});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!doctype html>
+<!-- ⚠ Sincronización: las cifras, la trayectoria y el contacto de esta web deben coincidir con el CV (PDF y Word) y con el perfil github.com/sandralobato. Si cambias uno, actualiza los otros. -->
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job search platform · case study · Sandra Lobato</title>
+<link rel="alternate" hreflang="es" href="https://sandralobato.com/empleo.html">
+<link rel="alternate" hreflang="en" href="https://sandralobato.com/en/empleo.html">
+<meta name="description" content="A B2B HR Tech SaaS with more than 1,000 active users across 7 access profiles. Roles and permissions, modular architecture, a phased «My search» path and team work queues. Designed and built end to end.">
+<meta property="og:title" content="Job search platform · case study · Sandra Lobato">
+<meta property="og:description" content="A B2B HR Tech SaaS with more than 1,000 active users across 7 access profiles. Designed and built end to end.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sandralobato.com/en/empleo.html">
+<meta property="og:image" content="https://sandralobato.com/img/og-en-empleo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236D5BFF'/%3E%3Ccircle cx='44' cy='20' r='22' fill='%23ffffff' opacity='.22'/%3E%3Ccircle cx='44' cy='20' r='10' fill='%23ffffff' opacity='.92'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#E9E6FF">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--tint:.55;--blur:18px;--ink:#14131A;--dim:#4B4A57;--ink2:#3E3D49;--glass:rgba(255,255,255,calc(.62*var(--tint) + .08));--acc:#6D5BFF;--acc-text:#5B44E8;--acc2:#D6409B;--acc3:#0B7E8C;--r:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Geist,Inter,system-ui,sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;background:#EEEDF7;min-height:100vh}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+[id]{scroll-margin-top:110px}
+.wrap{width:min(1040px,calc(100% - 48px));margin:0 auto}
+@media(max-width:700px){.wrap{width:calc(100% - 24px)}}
+
+/* fondo + luz (mismo sistema que la home): cónico pre-renderizado, rota por compositor */
+.sky{position:fixed;inset:-20%;z-index:-2;overflow:hidden}
+.sky canvas{position:absolute;left:50%;top:50%;width:135vmax;height:135vmax;transform:translate(-50%,-50%);animation:rot 24s linear infinite;will-change:transform}
+.sky::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 40%,rgba(255,255,255,.55),transparent)}
+@keyframes rot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}
+@media(prefers-reduced-motion:reduce){.sky canvas{animation:none}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.cl{position:fixed;left:0;top:0;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(255,255,255,.8) 0%,rgba(255,255,255,.28) 42%,transparent 70%);opacity:0;transition:opacity .6s;will-change:transform}
+.trail{position:fixed;inset:0;z-index:-1;pointer-events:none}
+@media(hover:none){.cl,.trail{display:none}}
+@media(prefers-reduced-motion:reduce){.cl,.trail{display:none}}
+
+/* material: el grueso del contenido no lleva blur real (el fondo ya es difuso); solo la nav lo conserva */
+.lg{position:relative;background:var(--glass);border-radius:var(--r);box-shadow:0 24px 60px -28px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(20,19,26,.05)}
+nav.lg{backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.05) 35%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.03) 70%,rgba(255,255,255,.5));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:4px;padding:8px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
+nav a{padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;transition:.25s;white-space:nowrap}
+nav a:hover{background:rgba(255,255,255,.5)}
+nav a.logo{font-weight:700}
+nav a.cta{background:#14131A;color:#fff;margin-left:16px}
+@media(max-width:700px){nav a{padding:8px 12px;font-size:13px}nav a.h{display:none}nav a.cta{margin-left:12px}}
+
+.tint{position:fixed;right:18px;bottom:18px;z-index:40;padding:12px 16px;border-radius:999px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--dim);background:rgba(255,255,255,.62)}
+.tint input{width:110px;accent-color:#14131A}
+@media(max-width:700px){.tint{display:none}}
+
+/* hero del caso */
+.ch{padding:150px 0 70px;display:grid;grid-template-columns:1.05fr .75fr;gap:48px;align-items:center}
+.eb{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.ch h1{font-weight:700;font-size:clamp(31px,4.2vw,56px);line-height:1.03;letter-spacing:-.04em;margin-top:16px}
+.ch .lead{font-size:clamp(16px,1.4vw,18.5px);color:var(--dim);margin-top:18px;max-width:560px}
+.ficha{margin-top:26px;padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px 26px}
+.ficha b{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.ficha span{font-size:14px;font-weight:500}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chips a{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500;background:rgba(255,255,255,.6);border:1px solid rgba(20,19,26,.12);box-shadow:0 6px 16px -8px rgba(20,19,26,.25),inset 0 1px 0 rgba(255,255,255,.8);transition:.25s}
+.chips a:hover{transform:translateY(-1px);background:rgba(255,255,255,.78);box-shadow:0 10px 22px -10px rgba(20,19,26,.3),inset 0 1px 0 rgba(255,255,255,.9)}
+.nota{margin-top:22px;padding:16px 20px;font-size:13.5px;color:var(--dim);line-height:1.55}
+.chv{padding:12px;border-radius:32px}
+.chv img{width:100%;border-radius:22px}
+.chvcap{display:block;font-size:11.5px;color:var(--dim);padding:10px 4px 0;line-height:1.5}
+@media(max-width:940px){.ch{grid-template-columns:1fr;padding-top:120px}.chv{order:-1;width:min(420px,100%);margin:0 auto}}
+
+/* secciones */
+.sec{padding:84px 0 0}
+.sec h2{font-weight:800;font-size:clamp(27px,3.4vw,44px);letter-spacing:-.04em;line-height:1.05}
+.sec>p{font-size:18px;color:var(--ink2);margin-top:18px}
+.sec h3{font-weight:700;font-size:clamp(19px,2vw,23px);letter-spacing:-.02em;margin-top:36px}
+.callout{margin-top:26px;padding:22px 26px;border-left:4px solid var(--acc);font-size:15.5px;color:var(--ink2)}
+.callout b{color:var(--acc-text)}
+.fig{margin-top:26px;padding:14px}
+.fig img{width:100%;border-radius:14px;cursor:zoom-in}
+.fig figcaption{font-size:12.5px;color:var(--dim);padding:12px 6px 2px;line-height:1.55}
+.cards{display:grid;gap:14px;margin-top:26px}
+.card{padding:24px}
+.card h3{font-size:17px;letter-spacing:-.01em;margin-top:0}
+.card p{font-size:15px;color:var(--ink2);margin-top:10px}
+.card .why{display:block;margin-top:14px;font-size:13px;font-weight:700;color:var(--acc-text)}
+.card .tag{display:inline-block;margin-bottom:10px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c2{grid-template-columns:repeat(2,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.c4{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){.c3{grid-template-columns:1fr}.c2{grid-template-columns:1fr}.c4{grid-template-columns:1fr}.ficha{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.stat{padding:22px}
+.stat b{display:block;font-size:clamp(32px,3.8vw,50px);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13px;color:var(--dim)}
+@media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+.num{position:absolute;bottom:10px;right:16px;font-size:34px;font-weight:800;letter-spacing:-.04em;color:rgba(109,91,255,.14);line-height:1;pointer-events:none}
+.pc{position:relative;overflow:hidden}
+.casecta{display:block;margin:74px 0 -40px;text-align:center;font-weight:600;font-size:15px;color:var(--acc-text)}
+.next{margin:96px 0 30px;padding:32px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.next h3{font-size:clamp(19px,2.4vw,26px);margin-top:6px;letter-spacing:-.02em}
+.next .go{font-weight:600;color:var(--acc-text);white-space:nowrap}
+footer{padding:26px 0 96px;font-size:13px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a:hover{color:var(--acc-text)}
+.lb{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(20,19,26,.62);backdrop-filter:blur(8px);cursor:zoom-out;padding:24px}
+.lb.on{display:grid}
+.lb img{max-width:94vw;max-height:92vh;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+
+/* resumen de resultados del caso */
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-20px;margin-bottom:10px}
+.res .rc{padding:22px 24px}
+.res .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.res p{font-size:15px;line-height:1.5;color:var(--ink2);margin-top:8px}
+.res .n{display:block;font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:4px;background:linear-gradient(100deg,#6D5BFF,#D6409B 52%,#0B7E8C);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){.res{grid-template-columns:1fr;margin-top:0}}
+
+/* autocrítica: qué haría distinto */
+.aut{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.aut.one{grid-template-columns:1fr}
+.aut .a{padding:20px 22px}
+.aut .a b{display:block;font-size:15.5px;font-weight:600;color:var(--ink)}
+.aut .a p{font-size:14.5px;line-height:1.55;margin-top:6px;color:var(--ink2)}
+@media(max-width:860px){.aut{grid-template-columns:1fr}}
+
+/* escuchar a los candidatos: lo que dijeron → lo que cambió */
+.obs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.obs .o{padding:20px 22px}
+.obs .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.obs .k.d{color:var(--acc-text);margin-top:14px}
+.obs .o p{font-size:14.5px;line-height:1.5;margin-top:6px;color:var(--ink2)}
+@media(max-width:860px){.obs{grid-template-columns:1fr}}
+
+/* medición antes / después */
+.met{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.met .m{padding:22px 24px}
+.met .n{display:block;font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.05;background:linear-gradient(100deg,#6D5BFF,#D6409B 52%,#0B7E8C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.met .m p{font-size:14.5px;line-height:1.5;margin-top:8px;color:var(--ink2)}
+.met-note{font-size:13.5px;color:var(--dim);margin-top:14px}
+@media(max-width:860px){.met{grid-template-columns:1fr}}
+
+/* testimonio */
+.quote{margin-top:64px;padding:34px 38px 30px;position:relative}
+.quote blockquote{font-size:clamp(18px,1.6vw,21px);line-height:1.55;color:var(--ink);letter-spacing:-.005em}
+.quote figcaption{margin-top:18px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+
+/* selector de idioma */
+.lang{position:fixed;top:18px;right:20px;z-index:41;display:flex;gap:2px;padding:8px;border-radius:999px;backdrop-filter:blur(var(--blur)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur)) saturate(180%)}
+.lang a{padding:10px 12px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.04em;line-height:17px;color:rgba(20,19,26,.55);transition:.25s}
+.lang a:hover{color:#14131A;background:rgba(255,255,255,.5)}
+.lang a[aria-current]{background:#14131A;color:#fff}
+@media(max-width:900px){nav{left:12px;transform:none}.lang{right:12px}}
+@media(max-width:700px){.lang a{padding:8px 10px}}
+@media(max-width:520px){nav a[href="#proyectos"]{display:none}}
+</style>
+</head>
+<body>
+<div class="sky"></div><div class="grain"></div><canvas id="trail" class="trail" aria-hidden="true"></canvas><div class="cl" aria-hidden="true"></div>
+<nav class="lg"><a class="logo" href="index.html">Sandra Lobato</a><a class="h" href="index.html#proyectos">All work</a><a class="h" href="filosofia.html">Philosophy</a><a class="h" href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a><a class="cta" href="mailto:info@sandralobato.com">Contact</a></nav>
+<div class="lang lg" role="navigation" aria-label="Language"><a href="../empleo.html" hreflang="es" lang="es" aria-label="Español">ES</a><a href="empleo.html" hreflang="en" lang="en" aria-current="page" aria-label="English">EN</a></div>
+<div class="tint"><span>Clear</span><input type="range" min="0" max="1" step="0.01" value="0.55" id="tintR" aria-label="Adjust glass tint"><span>Tinted</span></div>
+
+<header class="ch wrap">
+  <div>
+    <div class="eb">Case study · B2B SaaS · HR Tech · Internal tools</div>
+    <h1>Job search platform: one system, seven profiles, 1,000+ users</h1>
+    <p class="lead">A B2B SaaS product that supports recent bootcamp graduates in their job search, and gives the job search team the tools to guide and follow up with each of them. Designed and built end to end.</p>
+    <div class="ficha lg">
+      <div><b>Role</b><span>UX / Product Designer · design and build (low-code)</span></div>
+      <div><b>Timeline</b><span>Late 2023 – launched in 2024 · in use</span></div>
+      <div><b>Scale</b><span>1,057 active users out of 1,400 invited · ~80 cohorts · team of 12 · 30 companies</span></div>
+      <div><b>Users</b><span>Candidates · Job search team · Interviewers · 7 profiles</span></div>
+      <div><b>Tools</b><span>Miro, Figma · Airtable, Softr, Make</span></div>
+    </div>
+    <div class="nota lg">Due to confidentiality agreements, this case includes no screenshots of the real product. The diagrams and wireframes are simplified reconstructions with fictional data, generated with Claude from the original design, and focus on process and design decisions.</div>
+    <div class="chips"><a href="#problema">Problem</a><a href="#usuarios">Users and roles</a><a href="#arquitectura">Architecture</a><a href="#decisiones">Decisions</a><a href="#iteracion">Iteration</a><a href="#resultados">Results</a></div>
+  </div>
+  <div class="chv lg"><img src="../img/en/e-04-wireframe-mi-busqueda.webp" alt="Reconstruction of the My search wireframe"><span class="chvcap">Reconstruction of the «My search» wireframe. Image generated with Claude from the original design, for confidentiality.</span></div>
+</header>
+<section class="res wrap" aria-label="Case summary"><div class="rc lg"><span class="k">The problem</span><p>The process lived in spreadsheets and emails: the team couldn't see where each candidate stood, and candidates didn't know what to do next.</p></div><div class="rc lg"><span class="k">What I did</span><p>I designed and built, on my own, a platform with seven profiles: a phased «My search» for candidates, work queues by status for the team and permissions defined in the data model.</p></div><div class="rc lg"><span class="k">Impact</span><p><b class="n">1,057</b>active users out of 1,400 invited (3 in 4) and a team of 12 working in it every day since 2024, with no development team.</p></div></section>
+
+<main class="wrap">
+<section class="sec" id="problema">
+  <h2>The problem</h2>
+  <p>Employability processes are usually scattered across spreadsheets, emails, documents and disconnected tools. That makes it hard for the team to track each candidate's progress, manage sessions, share resources and provide consistent support. And candidates have no clear structure for what to do, how to improve their profile or how to manage their search.</p>
+  <p>The challenge: a platform that served both sides at once. Candidates could run their own process, and the team could coordinate, oversee and support them through scalable flows.</p>
+  <h3>My role</h3>
+  <p>I owned the end-to-end design: structure, flows, interface and the implementation in Softr. I worked with the job search team to understand their real workflow, pain points and operational constraints, and translated complex processes into clear, role-based experiences.</p>
+  <div class="callout lg"><b>Besides designing it, I built it.</b> The data model in Airtable, the frontend in Softr and the automations in Make (status changes, notifications, sync between modules) are mine from start to finish, with no development team. Designing and building at the same time forced me to make every UX decision with the data logic in front of me: every status the user sees exists as a real field, and every permission is defined in the model, not on the screen. That's what lets me talk to developers in their own language.</div>
+</section>
+
+<section class="sec" id="usuarios">
+  <h2>Users and roles</h2>
+  <p>The platform was designed for several roles with different goals, responsibilities and permissions. The challenge: getting everyone to work in the same system without interfering with each other or accessing confidential information.</p>
+  <figure class="fig lg"><img src="../img/en/e-07-mapa-del-sistema.webp" alt="System map with three areas and seven profiles" loading="lazy" decoding="async"><figcaption>System map: three areas and seven access profiles. This case focuses on the job search area. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <div class="cards c3">
+    <div class="card lg"><span class="tag">🎓</span><h3>Candidates</h3><p>Understand where they stand (searching, in process, hired), access resources, apply to openings, book sessions and interview practice, and receive feedback.</p><span class="why">Clarity · visible progress · low cognitive load</span></div>
+    <div class="card lg"><span class="tag">🧑‍💼</span><h3>Job search team</h3><p>Oversee many candidates at once, create sessions and content, review CVs, portfolios and repositories, answer questions and track programme metrics.</p><span class="why">Efficiency · clear dashboards · less manual work</span></div>
+    <div class="card lg"><span class="tag">🤝</span><h3>Partner companies</h3><p>Find junior profiles, post openings and send feedback. They had their own portal at launch; today the team manages their openings directly.</p><span class="why">First-version role, later retired</span></div>
+  </div>
+  <h3>Permissions and access control</h3>
+  <p>Each role was designed with specific visibility and editing permissions at page, block and field level. Within the same role, each user only sees their own data.</p>
+  <figure class="fig lg"><img src="../img/en/e-01-matriz-roles-permisos.webp" alt="Roles and permissions matrix" loading="lazy" decoding="async"><figcaption>Roles and permissions matrix: what each role can see and do in each module. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+</section>
+
+<section class="sec" id="arquitectura">
+  <h2>Information architecture and flows</h2>
+  <p>To reduce complexity and scale, the product was structured into modules shared by all roles, with role-based visibility and actions layered on top. A key decision was to separate content, actions and tracking into distinct modules while keeping the same navigation for everyone.</p>
+  <figure class="fig lg"><img src="../img/en/e-02-arquitectura-modulos.webp" alt="Module architecture in three layers" loading="lazy" decoding="async"><figcaption>The seven modules, grouped into three layers (content, actions, tracking). Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <p>Three independent journeys (candidate, team and company) that meet at five specific points. Those touchpoints are what replace the spreadsheets and emails: information passes from one role to another inside the same system.</p>
+  <figure class="fig lg"><img src="../img/en/e-03-flujos-centrales.webp" alt="Core flows by role" loading="lazy" decoding="async"><figcaption>Core flows by role and the touchpoints between them. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <div class="callout lg"><b>One home and one header for all seven profiles</b>, with conditional blocks by role. A candidate and a team member come in through the same door and see different things. Maintaining one page instead of seven is what made it possible for a single person to sustain the product.</div>
+</section>
+
+<section class="sec" id="decisiones">
+  <h2>Design decisions</h2>
+  <p>The decisions focused on reducing operational complexity, serving several roles and enabling scalable flows without increasing cognitive load. The two wireframes are simplified reconstructions of each role's main screen.</p>
+  <div class="cards c2">
+    <div><h3 style="margin-top:26px">The candidate: «My search»</h3><figure class="fig lg"><img src="../img/en/e-04-wireframe-mi-busqueda.webp" alt="My search wireframe" loading="lazy" decoding="async"><figcaption>Locked phases, required or read-only stages, deliverable and feedback in the same stage. Image generated with Claude from the original design, for confidentiality.</figcaption></figure></div>
+    <div><h3 style="margin-top:26px">The team: review queue</h3><figure class="fig lg"><img src="../img/en/e-05-wireframe-cola-equipo.webp" alt="Wireframe of the team's work queue" loading="lazy" decoding="async"><figcaption>The team navigates by work status, not by candidate: each tab is a task list with a counter. Image generated with Claude from the original design, for confidentiality.</figcaption></figure></div>
+  </div>
+  <h3 style="margin-top:34px">How I'd design it today: «My search» in high fidelity</h3>
+  <p>The wireframe shows the structure; this proposal shows how I'd take it to high fidelity today, with what we learned from candidate ratings. Each submission's status reads as a timeline (submitted, in review, completed) with the average response time, and help lives inside the stage: booking a 1:1 session or practising the interview with role-play without leaving the screen.</p>
+  <figure class="fig lg"><img src="../img/en/e-09-hifi-mi-busqueda.webp" alt="High-fidelity redesign proposal for My search" loading="lazy" decoding="async"><figcaption>High-fidelity redesign proposal, with a fictional visual identity and data. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <div class="cards c4">
+    <div class="card lg pc"><span class="num">01</span><h3>Role-based experiences, not a single solution</h3><p>Each role sees only what's relevant to it, and within a role each person sees only their own data.</p><span class="why">Faster onboarding · fewer errors · privacy</span></div>
+    <div class="card lg pc"><span class="num">02</span><h3>Progress visibility at the core</h3><p>Statuses, clear stages and centralised views to know where each candidate stands and what comes next.</p><span class="why">Clarity · less back-and-forth</span></div>
+    <div class="card lg pc"><span class="num">03</span><h3>Content, actions and tracking kept apart</h3><p>Each area evolves without breaking the initial structure.</p><span class="why">Lower cognitive load · scalability</span></div>
+    <div class="card lg pc"><span class="num">04</span><h3>Efficiency over aesthetics</h3><p>An internal tool used daily: legibility, consistent patterns and predictable interactions.</p><span class="why">Faster tasks · less friction</span></div>
+    <div class="card lg pc"><span class="num">05</span><h3>Designed to scale</h3><p>Reusable patterns and consistent navigation to add roles and features without disrupting what exists.</p><span class="why">Long-term maintainability</span></div>
+    <div class="card lg pc"><span class="num">06</span><h3>A guided path, not a library</h3><p>The search runs in three locked phases; stages are required or read-only; «submitted» and «completed» are different statuses: the candidate submits, the team closes.</p><span class="why">The team's method built into the product</span></div>
+    <div class="card lg pc"><span class="num">07</span><h3>Work queues instead of lists of people</h3><p>Views by status (not submitted, pending feedback, unanswered questions) with counters; candidates see the same statuses.</p><span class="why">Zero friction · nothing goes unanswered</span></div>
+    <div class="card lg pc"><span class="num">08</span><h3>Pragmatism where there's no integration</h3><p>External applications happen elsewhere. An «I've already applied» button keeps traceability without a single integration.</p><span class="why">Data that didn't exist before · zero technical cost</span></div>
+  </div>
+</section>
+
+<section class="sec" id="iteracion">
+  <h2>Iteration: the team's candidate view, from table to cards</h2>
+  <p>The first version showed candidates in a table: complete, but with more than twenty columns, the data the team checks every day (cohort, CV, LinkedIn, GitHub, skills) was off-screen or left empty. The feedback was unanimous: «I want to see what matters without scrolling».</p>
+  <figure class="fig lg"><img src="../img/en/e-08-iteracion-tabla-tarjetas.webp" alt="Iteration from table to cards" loading="lazy" decoding="async"><figcaption>Before: a table with more than 20 columns. After: cards with a fixed hierarchy and what matters in view. Image generated with Claude from the original design, for confidentiality.</figcaption></figure>
+  <p>I replaced it with cards with a fixed hierarchy (name, contact, cohort as a colour tag, the three links that define employability and skills as chips), with search and filters by skills, cohort and English level. Full details are one click away. On the candidate side there was hardly any negative feedback: the work was adding sections without breaking the structure.</p>
+  <h3>The result of the change, measured</h3>
+  <p>In the platform's analytics I compared nine months with the table (April to December 2025) and nine months with the cards (January to September 2026). Always per person and as a ratio, because the team grew in 2026.</p>
+  <div class="met"><div class="m lg"><b class="n">−23%</b><p>candidate profiles opened per list lookup: from 63 per 100 lookups to 49. What the team needs is now readable on the card.</p></div><div class="m lg"><b class="n">+19%</b><p>list lookups per team member: the view became the team's daily workspace.</p></div></div>
+  <p class="met-note">It's a before-and-after comparison, not a controlled experiment: other things changed in the same period. But both signals point in the direction the redesign was aiming for.</p>
+  <h3>Listening to candidates: a rating at the end of each phase</h3>
+  <p>When they finish each phase of «My search», candidates rate it from 0 to 10 and can leave a comment. The answers reach the team inside the same platform, in their own tab of the work queue, and read together they revealed problems that no other view showed.</p>
+  <div class="obs"><div class="o lg"><span class="k">They told us</span><p>They wanted their CV and LinkedIn reviewed before they started applying, not after.</p><span class="k d">We changed</span><p>More people on the team dedicated to reviewing CVs and LinkedIn profiles, so feedback arrives in time.</p></div><div class="o lg"><span class="k">They told us</span><p>Some felt alone in the self-guided phases and needed to apply the advice to their own situation.</p><span class="k d">We changed</span><p>The 1:1 session process was improved and a role-play section was added to practise interviews.</p></div><div class="o lg"><span class="k">They told us</span><p>There were broken links in the guides, especially in the Git section.</p><span class="k d">We changed</span><p>Every link in the content was reviewed and fixed.</p></div></div>
+  <p>Everything candidates pointed out was reviewed and changed. It's the part of the system I like most: the product doesn't just guide candidates, it also gives them a channel to say what isn't working.</p>
+</section>
+
+<figure class="quote lg"><blockquote>«I've been able to work with the platform Sandra designed and built for me and my team, and honestly I'm very happy with it. It isn't just a tool for us, it's also used by the candidates who are actively looking for a job. Every request we have, whether ours or the candidates', is heard and handled by her, always taking into account all the users' opinions. Thanks to her, the work is more comfortable and the processes are more agile for everyone. Of course, there's always room for improvement, but it's a tool that keeps evolving with us and helps us in our daily work.»</blockquote><figcaption>Member of the job search team</figcaption></figure>
+
+<section class="sec" id="resultados">
+  <h2>Results and learnings</h2>
+  <div class="stats">
+    <div class="stat lg"><b data-n="1057">1,057</b><span>active users out of 1,400 invited</span></div>
+    <div class="stat lg"><b data-n="80" data-p="~">~80</b><span>cohorts of 10–15 candidates</span></div>
+    <div class="stat lg"><b data-n="12">12</b><span>team members, every day</span></div>
+    <div class="stat lg"><b data-n="30">30</b><span>partner companies</span></div>
+  </div>
+  <p>A scalable B2B SaaS solution that supports candidates and the team through structured, role-based flows, in use since early 2024. Designed and built by one person, with no development team.</p>
+  <p>This project reinforced the importance of designing systems, not just interfaces: clarity, permissions and scalability in multi-role environments. And of making product decisions that balance each user's needs with real constraints.</p>
+  <h3>What I'd do differently</h3>
+  <div class="aut"><div class="a lg"><b>Test with the team before production</b><p>The table with more than 20 columns reached daily use, and it was the team's feedback that changed it. Today I'd show wireframes to two or three team members before building the view.</p></div><div class="a lg"><b>Define metrics at launch</b><p>I know how many people use the platform, but I didn't measure the team's response time or the queue of pending submissions before and after. Without that baseline, the impact of the work queues is hard to prove.</p></div></div>
+</section>
+
+<a class="casecta" href="mailto:info@sandralobato.com?subject=Job%20search%20platform%20case">Want to talk about this case? Email me ↗</a>
+
+<a class="next lg" href="proyectos.html"><div><div class="eb">Next</div><h3>Selected projects · recruitment and hackathon</h3></div><span class="go">See the projects →</span></a>
+</main>
+<footer class="wrap"><span>Sandra Lobato Pardavila · A Coruña, Spain · Available · Remote · <a href="mailto:info@sandralobato.com">info@sandralobato.com</a></span><span><a href="index.html">Home</a> · <a href="https://www.linkedin.com/in/sandra-lobato/" target="_blank" rel="noopener">LinkedIn</a> · <a href="../cv-sandra-lobato-2026-en.pdf" target="_blank">CV ↗</a></span></footer>
+
+<div class="lb" id="lb" aria-hidden="true"><img src="../img/en/e-07-mapa-del-sistema.webp" alt=""></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,OK=!!(window.gsap&&window.Lenis);let lenis=null;
+if(OK){gsap.registerPlugin(ScrollTrigger);
+if(!RM){lenis=new Lenis({lerp:.1});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);}}
+const ANIM=OK&&!RM;
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t&&lenis){e.preventDefault();lenis.scrollTo(t,{offset:-80})}}));
+
+/* cielo: textura cónica pre-renderizada una vez (nítida a 256px, escalada = difuminada); rota por compositor */
+(()=>{const sky=document.querySelector('.sky');if(!sky)return;
+  const small=document.createElement('canvas');small.width=small.height=256;
+  const sc=small.getContext('2d');
+  if(sc.createConicGradient){const g=sc.createConicGradient(0,128,128);
+    ['#E9E6FF','#FFE1EF','#E0FBF5','#FFF2D9','#E9E6FF'].forEach((c,i)=>g.addColorStop(i/4,c));
+    sc.fillStyle=g;sc.fillRect(0,0,256,256)}
+  else{sc.fillStyle='#E9E6FF';sc.fillRect(0,0,256,256)}
+  const tex=document.createElement('canvas');tex.width=tex.height=1024;
+  const tc=tex.getContext('2d');tc.imageSmoothingEnabled=true;tc.imageSmoothingQuality='high';
+  tc.drawImage(small,0,0,1024,1024);
+  sky.appendChild(tex);tex.setAttribute('aria-hidden','true');
+})();
+
+/* tinte del cristal */
+const root=document.documentElement,tintR=document.getElementById('tintR');
+tintR.addEventListener('input',e=>{root.style.setProperty('--tint',e.target.value)});
+
+/* luz del cursor: halo suave + estela de cometa muestreada a la tasa nativa del ratón */
+if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const cl=document.querySelector('.cl'),cv=document.getElementById('trail');
+  if(cl&&cv&&cv.getContext){
+    const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2)*.5;
+    let pts=[],mx=innerWidth*.5,my=innerHeight*.35,x=mx,y=my,clean=false,lastB=null,seen=false;
+    const sp=document.createElement('canvas');sp.width=sp.height=128;
+    {const sc=sp.getContext('2d'),g=sc.createRadialGradient(64,64,0,64,64,64);
+     g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.5)');g.addColorStop(1,'rgba(255,255,255,0)');
+     sc.fillStyle=g;sc.fillRect(0,0,128,128)}
+    const size=()=>{cv.width=Math.ceil(innerWidth*dpr);cv.height=Math.ceil(innerHeight*dpr);cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';clean=false;lastB=null};
+    size();addEventListener('resize',size);
+    addEventListener('pointermove',e=>{
+      const evs=e.getCoalescedEvents?e.getCoalescedEvents():null,list=evs&&evs.length?evs:[e];
+      for(const ev of list){const ex=ev.clientX,ey=ev.clientY,l=pts[pts.length-1];
+        if(!l||l.x!==ex||l.y!==ey)pts.push({x:ex,y:ey,t:ev.timeStamp||performance.now()})}
+      mx=e.clientX;my=e.clientY;if(!seen){seen=true;x=mx;y=my;cl.style.opacity=1}clean=false;
+    },{passive:true});
+    document.addEventListener('mouseleave',()=>{seen=false;cl.style.opacity=0;pts.length=0;lastB=null;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,innerWidth,innerHeight)});
+    let pt0=performance.now();
+    gsap.ticker.add(()=>{
+      if(!seen)return;
+      const now=performance.now(),T=700,dt=Math.min((now-pt0)/1000,.05);pt0=now;
+      const f=1-Math.exp(-dt*18);
+      const ox=x,oy=y;
+      x+=(mx-x)*f;y+=(my-y)*f;
+      cl.style.transform=`translate(${x}px,${y}px)`;
+      if(pts.length>500)pts.splice(0,pts.length-500);
+      while(pts.length&&now-pts[0].t>T)pts.shift();
+      if(clean&&pts.length===0&&x===ox&&y===oy)return;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      /* limpiar solo la caja del rastro (margen para sellos y cabeza), unida a la del frame anterior */
+      let bx=x-60,by=y-60,bx2=x+60,by2=y+60;
+      for(const p of pts){if(p.x<bx)bx=p.x;if(p.y<by)by=p.y;if(p.x>bx2)bx2=p.x;if(p.y>by2)by2=p.y}
+      if(lastB){bx=Math.min(bx,lastB.x);by=Math.min(by,lastB.y);bx2=Math.max(bx2,lastB.x+lastB.w);by2=Math.max(by2,lastB.y+lastB.h)}
+      ctx.clearRect(bx,by,bx2-bx,by2-by);
+      lastB={x:bx,y:by,w:bx2-bx,h:by2-by};
+      ctx.globalCompositeOperation='lighter';
+      const n=pts.length,hx=n?pts[n-1].x:x,hy=n?pts[n-1].y:y;
+      const rg=ctx.createRadialGradient(hx,hy,0,hx,hy,28);
+      rg.addColorStop(0,'rgba(255,255,255,.65)');rg.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(hx,hy,28,0,7);ctx.fill();
+      if(n>=3&&Math.hypot(pts[n-1].x-pts[0].x,pts[n-1].y-pts[0].y)>4){
+        const d=[{x:pts[0].x,y:pts[0].y,k:Math.max(0,Math.min(1,(pts[0].t-now+T)/T))}];
+        let lx=pts[0].x,ly=pts[0].y;
+        for(let i=1;i<n;i++){const a=pts[i-1],b=pts[i],st=Math.max(1,Math.round(Math.hypot(b.x-lx,b.y-ly)/10));
+          for(let s=1;s<=st;s++){const t=s/st,tt=a.t+(b.t-a.t)*t,nx2=a.x+(b.x-a.x)*t,ny2=a.y+(b.y-a.y)*t;
+            d.push({x:nx2,y:ny2,k:Math.max(0,Math.min(1,(tt-now+T)/T))});lx=nx2;ly=ny2}}
+        const stamp=(r0,r1,a0)=>{for(const p of d){const r=r1+(r0-r1)*p.k;ctx.globalAlpha=a0*p.k;ctx.drawImage(sp,p.x-r,p.y-r,r*2,r*2)}};
+        stamp(46,10,.16);stamp(18,4,.35);
+        ctx.globalAlpha=1;
+      }
+      ctx.globalCompositeOperation='source-over';
+      clean=pts.length===0&&x===ox&&y===oy;
+    });
+  }
+}
+
+/* hero */
+if(ANIM)gsap.from('.ch .eb,.ch h1,.ch .lead,.ch .ficha,.ch .nota,.ch .chips',{opacity:0,y:26,duration:1,stagger:.08,ease:'power3'});
+if(ANIM)gsap.from('.ch .chv',{opacity:0,y:60,duration:1.3,delay:.25,ease:'expo.out'});
+if(ANIM)gsap.to('.ch .chv',{y:-60,ease:'none',scrollTrigger:{trigger:'.ch',start:'top top',end:'bottom top',scrub:true}});
+
+/* revelado */
+if(ANIM)gsap.utils.toArray('.fig,.callout,.card,.stat,.nota,.ficha,.next').forEach(el=>gsap.from(el,{opacity:0,y:34,duration:.9,ease:'power3',clearProps:'transform,opacity',scrollTrigger:{trigger:el,start:'top 90%'}}));
+
+/* contadores */
+if(ANIM)document.querySelectorAll('[data-n]').forEach(b=>{const n=+b.dataset.n,p=b.dataset.p||'',c={v:0};ScrollTrigger.create({trigger:b,start:'top 90%',once:true,onEnter:()=>gsap.to(c,{v:n,duration:1.6,ease:'expo.out',onUpdate:()=>b.textContent=(p==='+'?'':p)+Math.round(c.v).toLocaleString('en-US')+(p==='+'?'+':'')})})});
+
+/* lightbox */
+const lb=document.getElementById('lb');
+let lbFocus=null;
+const lbOpen=im=>{lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.classList.add('on');lb.setAttribute('aria-hidden','false');if(lenis)lenis.stop();lbFocus=document.activeElement;lb.focus()};
+const lbClose=()=>{lb.classList.remove('on');lb.setAttribute('aria-hidden','true');if(lenis)lenis.start();if(lbFocus&&lbFocus.focus)lbFocus.focus()};
+document.querySelectorAll('.fig img').forEach(im=>{im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label','Enlarge: '+(im.alt||'image'));im.addEventListener('click',()=>lbOpen(im));im.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lbOpen(im)}})});
+lb.tabIndex=-1;
+lb.addEventListener('click',()=>lbClose());
+addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))lbClose()});
+
+</script>
+</body>
+</html>
