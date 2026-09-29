@@ -419,8 +419,10 @@ if(OK&&matchMedia('(hover:hover) and (pointer:fine)').matches){
       ctx.setTransform(dpr,0,0,dpr,0,0);
       /* limpiar solo la caja del rastro (margen para sellos y cabeza), unida a la del frame anterior */
       let bx=x-60,by=y-60,bx2=x+60,by2=y+60;
-      for(const p of pts){if(p.x<bx)bx=p.x;if(p.y<by)by=p.y;if(p.x>bx2)bx2=p.x;if(p.y>by2)by2=p.y}
+      const M=52;  /* margen = radio máximo de los sellos (46) + holgura, para que el borrado cubra todo el halo */
+      for(const p of pts){if(p.x-M<bx)bx=p.x-M;if(p.y-M<by)by=p.y-M;if(p.x+M>bx2)bx2=p.x+M;if(p.y+M>by2)by2=p.y+M}
       if(lastB){bx=Math.min(bx,lastB.x);by=Math.min(by,lastB.y);bx2=Math.max(bx2,lastB.x+lastB.w);by2=Math.max(by2,lastB.y+lastB.h)}
+      bx=Math.floor(bx)-2;by=Math.floor(by)-2;bx2=Math.ceil(bx2)+2;by2=Math.ceil(by2)+2;  /* bordes enteros: sin restos de antialiasing */
       ctx.clearRect(bx,by,bx2-bx,by2-by);
       lastB={x:bx,y:by,w:bx2-bx,h:by2-by};
       ctx.globalCompositeOperation='lighter';
